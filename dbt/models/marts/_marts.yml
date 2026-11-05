@@ -172,3 +172,7 @@ models:
           (compare total_generation_change_twh and renewables_change_twh) and is volatile for small grids.
       - name: renewables_change_twh
         description: Absolute change in renewable generation (TWh) over the window; use beside the share change.
+      - name: renewables_growth_twh_rank
+        description: >
+          Rank among eligible countries by absolute renewable growth (TWh). Complements renewable_share_change_rank,
+          which mostly rewards grids whose total generation fell (2010-2022: the top 4 by share all shrank).

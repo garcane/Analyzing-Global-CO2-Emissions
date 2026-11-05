@@ -1,0 +1,45 @@
+name: CI
+
+# Offline checks: no Snowflake, no secrets. Keeps working after the Snowflake trial ends.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:   # lets you run it by hand on any branch from the Actions tab
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Install locked dependencies on the pinned Python
+        run: uv sync --frozen
+
+      - name: Lint
+        run: uv run ruff check ingestion tests dbt/run_dbt.py
+
+      # Unit tests also include repo hygiene (secret scan, profile uses env_var only)
+      # and the RAW-column / dbt-staging contract.
+      - name: Unit tests
+        run: uv run pytest -q
+
+      # `dbt parse` compiles the whole project (refs, sources, macros, tests, YAML) without a connection.
+      # The values below are dummies: parse only needs the variables to exist.
+      - name: dbt parse (no connection)
+        env:
+          SNOWFLAKE_ACCOUNT: ci-dummy
+          DBT_SNOWFLAKE_USER: ci-dummy
+          DBT_SNOWFLAKE_ROLE: ci-dummy
+          DBT_SNOWFLAKE_PRIVATE_KEY_PATH: /nonexistent/key.p8
+        run: uv run python dbt/run_dbt.py parse --no-partial-parse

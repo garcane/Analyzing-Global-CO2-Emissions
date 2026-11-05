@@ -51,7 +51,12 @@ changes as (
 
 select
     *,
+    -- Two rankings on purpose. By share (pp) rewards grids that shrank; by absolute renewable growth (TWh)
+    -- rewards big builders. Show them side by side and never present the pp ranking alone.
     case when is_eligible
          then rank() over (partition by is_eligible order by renewable_share_change_pp desc nulls last)
-    end as renewable_share_change_rank
+    end as renewable_share_change_rank,
+    case when is_eligible
+         then rank() over (partition by is_eligible order by renewables_change_twh desc nulls last)
+    end as renewables_growth_twh_rank
 from changes

@@ -23,6 +23,8 @@ vars:
   # which has more terms and 3-decimal rounding.
   tolerance_renewables_twh: 0.01
   tolerance_total_twh: 0.05
+  # Warn when a new load differs from the previous one by more than this many percent of rows.
+  row_count_change_warn_pct: 5
 
 models:
   gei:

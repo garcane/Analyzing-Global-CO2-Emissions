@@ -75,6 +75,27 @@ class SnowflakeSettings:
             private_key_passphrase=os.environ.get("SNOWFLAKE_PRIVATE_KEY_PASSPHRASE") or None,
         )
 
+    @classmethod
+    def for_reporter(cls, use_dbt_credentials: bool = False) -> SnowflakeSettings:
+        """Read-only settings for exporting the marts (database GEI_ANALYTICS, key-pair auth).
+
+        Normally the REPORTER_SNOWFLAKE_* variables (service user GEI_REPORTER_SVC, role GEI_REPORTER).
+        `use_dbt_credentials=True` borrows the DBT_SNOWFLAKE_* user instead, as an interim before the
+        reporter user exists; admin roles are refused either way.
+        """
+        load_dotenv(REPO_ROOT / ".env")
+        prefix = "DBT_SNOWFLAKE" if use_dbt_credentials else "REPORTER_SNOWFLAKE"
+        default_role = "GEI_TRANSFORMER" if use_dbt_credentials else "GEI_REPORTER"
+        return cls(
+            account=_require("SNOWFLAKE_ACCOUNT"),
+            user=_require(f"{prefix}_USER"),
+            role=os.environ.get(f"{prefix}_ROLE", "").strip() or default_role,
+            warehouse=os.environ.get("SNOWFLAKE_WAREHOUSE", "").strip() or "GEI_WH",
+            database=os.environ.get("GEI_ANALYTICS_DATABASE", "").strip() or "GEI_ANALYTICS",
+            authenticator=KEYPAIR,
+            private_key_path=Path(_require(f"{prefix}_PRIVATE_KEY_PATH")),
+        )
+
     def connection_params(self) -> dict:
         """Arguments for snowflake.connector.connect(), for the configured authentication mode."""
         params: dict = {

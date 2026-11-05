@@ -142,12 +142,52 @@ CREATE USER IF NOT EXISTS GEI_TRANSFORMER_SVC
 GRANT ROLE GEI_TRANSFORMER TO USER GEI_TRANSFORMER_SVC;
 
 ----------------------------------------------------------------------
+-- 6b. (v3) Two more service users, each with its own key pair:
+--     GEI_CI_SVC       GitHub Actions dbt build (builds only into throwaway dbt_ci_* schemas)
+--     GEI_REPORTER_SVC read-only export of the marts for Power BI (role GEI_REPORTER: MARTS only)
+--     Placeholders: <CI_PUBLIC_KEY>, <REPORTER_PUBLIC_KEY>
+----------------------------------------------------------------------
+USE ROLE SECURITYADMIN;
+
+-- GEI_CI is deliberately NOT the transformer role: it can read GEI_RAW and create its own schemas in
+-- GEI_ANALYTICS (dbt_ci_* throwaway schemas) but has no privilege on the prod STAGING / INTERMEDIATE /
+-- MARTS schemas, so Snowflake itself stops a CI run from writing prod.
+CREATE ROLE IF NOT EXISTS GEI_CI;
+GRANT ROLE GEI_CI TO ROLE SYSADMIN;
+GRANT USAGE, OPERATE ON WAREHOUSE GEI_WH TO ROLE GEI_CI;
+GRANT USAGE ON DATABASE GEI_RAW TO ROLE GEI_CI;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE GEI_RAW TO ROLE GEI_CI;
+GRANT SELECT ON ALL TABLES IN DATABASE GEI_RAW TO ROLE GEI_CI;
+GRANT SELECT ON ALL VIEWS  IN DATABASE GEI_RAW TO ROLE GEI_CI;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA GEI_RAW.EMBER TO ROLE GEI_CI;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA GEI_RAW.OWID  TO ROLE GEI_CI;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA GEI_RAW.META  TO ROLE GEI_CI;
+GRANT SELECT ON FUTURE VIEWS  IN SCHEMA GEI_RAW.META  TO ROLE GEI_CI;
+GRANT USAGE, CREATE SCHEMA ON DATABASE GEI_ANALYTICS TO ROLE GEI_CI;
+
+CREATE USER IF NOT EXISTS GEI_CI_SVC
+  TYPE = SERVICE
+  DEFAULT_ROLE = GEI_CI
+  DEFAULT_WAREHOUSE = GEI_WH
+  RSA_PUBLIC_KEY = '<CI_PUBLIC_KEY>';
+GRANT ROLE GEI_CI TO USER GEI_CI_SVC;
+
+CREATE USER IF NOT EXISTS GEI_REPORTER_SVC
+  TYPE = SERVICE
+  DEFAULT_ROLE = GEI_REPORTER
+  DEFAULT_WAREHOUSE = GEI_WH
+  RSA_PUBLIC_KEY = '<REPORTER_PUBLIC_KEY>';
+GRANT ROLE GEI_REPORTER TO USER GEI_REPORTER_SVC;
+
+----------------------------------------------------------------------
 -- 7. OPTIONAL: let your own login use GEI_LOADER (browser login for local development).
 -- Replace <YOUR_LOGIN_NAME> with your Snowflake login name, then uncomment.
 ----------------------------------------------------------------------
 -- USE ROLE SECURITYADMIN;
 -- GRANT ROLE GEI_LOADER TO USER <YOUR_LOGIN_NAME>;
 -- GRANT ROLE GEI_TRANSFORMER TO USER <YOUR_LOGIN_NAME>;
+-- Power BI sign-in with your own login needs this (Snowflake only lets a user USE a role granted to them):
+-- GRANT ROLE GEI_REPORTER TO USER <YOUR_LOGIN_NAME>;
 
 ----------------------------------------------------------------------
 -- 8. Checks. After running, the transformer must see nothing in JAFFLE_SHOP, STRIPE or DBT_GARCANE.

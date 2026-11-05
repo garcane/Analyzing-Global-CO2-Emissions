@@ -1,0 +1,81 @@
+// NOT YET EXECUTED IN POWER BI DESKTOP. These measures were written against the model in model.md but
+// have not been run; test each against the expected values in report_spec.md when you build the report.
+
+// DAX measures for the Global Energy Intelligence report.
+// Table names match docs/powerbi/model.md. Shares are fractions formatted as % in the report.
+
+// ---------- Generation and shares (country pages) ----------
+Total Generation TWh =
+CALCULATE ( SUM ( mart_country_energy_profile[total_generation_twh] ),
+            mart_country_energy_profile[is_complete_year] = TRUE () )
+
+Renewables TWh =
+CALCULATE ( SUM ( mart_country_energy_profile[renewables_twh] ),
+            mart_country_energy_profile[is_complete_year] = TRUE () )
+
+Fossil TWh =
+CALCULATE ( SUM ( mart_country_energy_profile[fossil_twh] ),
+            mart_country_energy_profile[is_complete_year] = TRUE () )
+
+// Share of GENERATION (not consumption). Built from sums so a selection of many countries is
+// energy-weighted; never AVERAGE the country percentages.
+Renewable Share = DIVIDE ( [Renewables TWh], [Total Generation TWh] )
+Fossil Share    = DIVIDE ( [Fossil TWh], [Total Generation TWh] )
+
+Wind + Solar Share =
+DIVIDE (
+    CALCULATE ( SUM ( mart_country_energy_profile[wind_twh] ) + SUM ( mart_country_energy_profile[solar_twh] ),
+                mart_country_energy_profile[is_complete_year] = TRUE () ),
+    [Total Generation TWh]
+)
+
+Generation per Capita kWh =
+DIVIDE ( [Total Generation TWh] * 1000000000, SUM ( mart_country_energy_profile[population] ) )
+// Valid for one country-year or a set of countries that all have population; blank otherwise.
+
+// ---------- Year on year ----------
+// The model has no date table (year is a whole number), so "prior year" is explicit:
+Renewables TWh PY =
+VAR y = SELECTEDVALUE ( mart_country_energy_profile[year] )
+RETURN CALCULATE ( [Renewables TWh], mart_country_energy_profile[year] = y - 1 )
+
+Renewables YoY TWh = [Renewables TWh] - [Renewables TWh PY]
+
+// ---------- World page (Ember's own World region; never a sum of countries) ----------
+World Generation TWh =
+CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ),
+            dim_geography[geography_key] = "REG_WORLD" )
+
+World Renewable Share =
+DIVIDE (
+    CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ),
+                dim_geography[geography_key] = "REG_WORLD",
+                dim_energy_source[is_renewable] = TRUE () ),
+    [World Generation TWh]
+)
+
+// ---------- Capacity vs generation (single year in context) ----------
+Hours in Year =
+VAR y = SELECTEDVALUE ( mart_renewable_growth[year] )
+RETURN IF ( ( MOD ( y, 4 ) = 0 && MOD ( y, 100 ) <> 0 ) || MOD ( y, 400 ) = 0, 8784, 8760 )
+
+// Display guard: capacities below 0.15 GW are blanked. On 2026-11-05 all 16 implausible capacity factors
+// (> 1.5) had capacity of 0.11 GW or less (Ember placeholders/rounding); this hides them, it does not fix them.
+Capacity Factor =
+VAR cap = SUM ( mart_renewable_growth[capacity_gw] )
+RETURN IF ( cap < 0.15, BLANK (),
+            DIVIDE ( SUM ( mart_renewable_growth[generation_twh] ) * 1000, cap * [Hours in Year] ) )
+
+// ---------- Transition page (window fixed in the data: 2010 -> 2022) ----------
+Eligible Countries = CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE () )
+
+Decoupled Countries =
+CALCULATE ( COUNTROWS ( mart_energy_transition ),
+            mart_energy_transition[is_eligible] = TRUE (),
+            mart_energy_transition[is_economy_co2_decoupled] = TRUE () )
+// "Decoupled" = GDP up and economy-wide CO2 down over the window. An association, not a cause.
+
+Renewable Share Change pp = SUM ( mart_energy_transition[renewable_share_change_pp] )   // use per country (table rows)
+Renewables Change TWh     = SUM ( mart_energy_transition[renewables_change_twh] )
+Total Generation Change TWh = SUM ( mart_energy_transition[total_generation_change_twh] )
+// Always show the three above together: a share can rise because total generation fell.

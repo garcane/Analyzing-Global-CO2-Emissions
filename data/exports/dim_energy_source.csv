@@ -1,0 +1,18 @@
+source_key,source_name,category,is_aggregate,is_renewable,is_low_carbon,is_generation
+bioenergy,Bioenergy,renewable,false,true,true,true
+clean,Clean,low_carbon,true,false,true,true
+coal,Coal,fossil,false,false,false,true
+demand,Demand,demand,true,false,false,false
+fossil,Fossil,fossil,true,false,false,true
+gas,Gas,fossil,false,false,false,true
+hydro,Hydro,renewable,false,true,true,true
+hydro_bioenergy_and_other_renewables,"Hydro, bioenergy and other renewables",renewable,true,true,true,true
+net_imports,Net imports,trade,false,false,false,false
+nuclear,Nuclear,nuclear,false,false,true,true
+other_fossil,Other fossil,fossil,false,false,false,true
+other_renewables,Other renewables,renewable,false,true,true,true
+renewables,Renewables,renewable,true,true,true,true
+solar,Solar,renewable,false,true,true,true
+total_generation,Total generation,total,true,false,false,true
+wind,Wind,renewable,false,true,true,true
+wind_and_solar,Wind and solar,renewable,true,true,true,true
