@@ -1,0 +1,33 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+profiles.yml
+*.pem
+*.p8
+*.key
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Legacy local scratch file (hardcoded account/user); replaced by ingestion/
+snowflake_connector.py
+
+# API extracts (regenerable)
+data/api/

@@ -1,0 +1,118 @@
+-- Global Energy Intelligence Pipeline: one-time Snowflake setup.
+-- Run manually, section by section, in a Snowflake worksheet as an administrator.
+-- Review before running. Nothing in this file is executed by the pipeline.
+-- Placeholders to replace: <LOADER_PUBLIC_KEY>, <TRANSFORMER_PUBLIC_KEY> (see docs/snowflake_setup.md).
+
+----------------------------------------------------------------------
+-- 1. Warehouse + credit cap (trial account: keep it small)
+----------------------------------------------------------------------
+USE ROLE ACCOUNTADMIN;
+
+CREATE WAREHOUSE IF NOT EXISTS GEI_WH
+  WAREHOUSE_SIZE = XSMALL
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE
+  INITIALLY_SUSPENDED = TRUE;
+
+-- CREDIT_QUOTA is a placeholder: set it to a share of your trial credits.
+CREATE RESOURCE MONITOR IF NOT EXISTS GEI_MONITOR
+  WITH CREDIT_QUOTA = 10 FREQUENCY = MONTHLY START_TIMESTAMP = IMMEDIATELY
+  TRIGGERS ON 80 PERCENT DO NOTIFY
+           ON 100 PERCENT DO SUSPEND;
+ALTER WAREHOUSE GEI_WH SET RESOURCE_MONITOR = GEI_MONITOR;
+
+----------------------------------------------------------------------
+-- 2. Roles (least privilege; none of them is an admin role)
+----------------------------------------------------------------------
+USE ROLE SECURITYADMIN;
+CREATE ROLE IF NOT EXISTS GEI_LOADER;       -- writes RAW
+CREATE ROLE IF NOT EXISTS GEI_TRANSFORMER;  -- reads RAW, writes ANALYTICS (dbt)
+CREATE ROLE IF NOT EXISTS GEI_REPORTER;     -- reads ANALYTICS.MARTS (Power BI, later the AI assistant)
+GRANT ROLE GEI_LOADER, GEI_TRANSFORMER, GEI_REPORTER TO ROLE SYSADMIN;
+
+----------------------------------------------------------------------
+-- 3. Databases and schemas
+----------------------------------------------------------------------
+USE ROLE SYSADMIN;
+CREATE DATABASE IF NOT EXISTS RAW;         -- already exists in this account
+CREATE SCHEMA IF NOT EXISTS RAW.EMBER;
+CREATE SCHEMA IF NOT EXISTS RAW.OWID;
+CREATE SCHEMA IF NOT EXISTS RAW.META;
+
+CREATE DATABASE IF NOT EXISTS ANALYTICS;
+CREATE SCHEMA IF NOT EXISTS ANALYTICS.STAGING;
+CREATE SCHEMA IF NOT EXISTS ANALYTICS.INTERMEDIATE;
+CREATE SCHEMA IF NOT EXISTS ANALYTICS.MARTS;
+
+----------------------------------------------------------------------
+-- 4. Grants
+----------------------------------------------------------------------
+USE ROLE SECURITYADMIN;
+
+GRANT USAGE, OPERATE ON WAREHOUSE GEI_WH TO ROLE GEI_LOADER;
+GRANT USAGE, OPERATE ON WAREHOUSE GEI_WH TO ROLE GEI_TRANSFORMER;
+GRANT USAGE ON WAREHOUSE GEI_WH TO ROLE GEI_REPORTER;
+
+-- Loader: creates and writes tables/stage/view in the RAW schemas.
+GRANT USAGE ON DATABASE RAW TO ROLE GEI_LOADER;
+GRANT USAGE, CREATE TABLE, CREATE STAGE, CREATE VIEW ON SCHEMA RAW.EMBER TO ROLE GEI_LOADER;
+GRANT USAGE, CREATE TABLE, CREATE STAGE, CREATE VIEW ON SCHEMA RAW.OWID  TO ROLE GEI_LOADER;
+GRANT USAGE, CREATE TABLE, CREATE STAGE, CREATE VIEW ON SCHEMA RAW.META  TO ROLE GEI_LOADER;
+
+-- Transformer: read-only on RAW (future objects included), full control in ANALYTICS.
+GRANT USAGE ON DATABASE RAW TO ROLE GEI_TRANSFORMER;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE RAW TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON ALL TABLES IN DATABASE RAW TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON ALL VIEWS  IN DATABASE RAW TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA RAW.EMBER TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA RAW.OWID  TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA RAW.META  TO ROLE GEI_TRANSFORMER;
+GRANT SELECT ON FUTURE VIEWS  IN SCHEMA RAW.META  TO ROLE GEI_TRANSFORMER;
+
+GRANT USAGE ON DATABASE ANALYTICS TO ROLE GEI_TRANSFORMER;
+GRANT USAGE, CREATE TABLE, CREATE VIEW ON ALL SCHEMAS IN DATABASE ANALYTICS TO ROLE GEI_TRANSFORMER;
+-- dbt dev/CI schemas (dbt_<name>) are created inside ANALYTICS:
+GRANT CREATE SCHEMA ON DATABASE ANALYTICS TO ROLE GEI_TRANSFORMER;
+
+-- Reporter: marts only.
+GRANT USAGE ON DATABASE ANALYTICS TO ROLE GEI_REPORTER;
+GRANT USAGE ON SCHEMA ANALYTICS.MARTS TO ROLE GEI_REPORTER;
+GRANT SELECT ON ALL TABLES IN SCHEMA ANALYTICS.MARTS TO ROLE GEI_REPORTER;
+GRANT SELECT ON FUTURE TABLES IN SCHEMA ANALYTICS.MARTS TO ROLE GEI_REPORTER;
+GRANT SELECT ON ALL VIEWS IN SCHEMA ANALYTICS.MARTS TO ROLE GEI_REPORTER;
+GRANT SELECT ON FUTURE VIEWS IN SCHEMA ANALYTICS.MARTS TO ROLE GEI_REPORTER;
+
+----------------------------------------------------------------------
+-- 5. Service users (key-pair auth, no password)
+-- [Verify] TYPE = SERVICE is available on your account; if not, use TYPE = LEGACY_SERVICE or omit TYPE.
+----------------------------------------------------------------------
+USE ROLE SECURITYADMIN;
+
+CREATE USER IF NOT EXISTS GEI_LOADER_SVC
+  TYPE = SERVICE
+  DEFAULT_ROLE = GEI_LOADER
+  DEFAULT_WAREHOUSE = GEI_WH
+  RSA_PUBLIC_KEY = '<LOADER_PUBLIC_KEY>';
+GRANT ROLE GEI_LOADER TO USER GEI_LOADER_SVC;
+
+CREATE USER IF NOT EXISTS GEI_TRANSFORMER_SVC
+  TYPE = SERVICE
+  DEFAULT_ROLE = GEI_TRANSFORMER
+  DEFAULT_WAREHOUSE = GEI_WH
+  RSA_PUBLIC_KEY = '<TRANSFORMER_PUBLIC_KEY>';
+GRANT ROLE GEI_TRANSFORMER TO USER GEI_TRANSFORMER_SVC;
+
+----------------------------------------------------------------------
+-- 7. OPTIONAL: let your own login use GEI_LOADER (browser login for local development).
+-- Replace <YOUR_LOGIN_NAME> with your Snowflake login name, then uncomment.
+----------------------------------------------------------------------
+-- USE ROLE SECURITYADMIN;
+-- GRANT ROLE GEI_LOADER TO USER <YOUR_LOGIN_NAME>;
+-- GRANT ROLE GEI_TRANSFORMER TO USER <YOUR_LOGIN_NAME>;
+
+----------------------------------------------------------------------
+-- 6. Checks (should list only the intended grants)
+----------------------------------------------------------------------
+SHOW GRANTS TO ROLE GEI_LOADER;
+SHOW GRANTS TO ROLE GEI_TRANSFORMER;
+SHOW GRANTS TO USER GEI_LOADER_SVC;

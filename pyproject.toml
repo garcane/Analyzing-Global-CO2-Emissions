@@ -1,7 +1,32 @@
 [project]
-name = "analyzing-global-co2-emissions"
+name = "global-energy-intelligence-pipeline"
 version = "0.1.0"
-description = "Add your description here"
+description = "Ember + OWID electricity and CO2 data -> Snowflake -> dbt -> Power BI"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "dbt-core",
+    "dbt-snowflake",
+    "snowflake-connector-python",
+    "pandas",
+    "requests",
+    "python-dotenv",
+    "cryptography",
+    "truststore>=0.10.5",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "ipykernel",
+    "matplotlib",
+    "seaborn",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
