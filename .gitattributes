@@ -1,0 +1,44 @@
+# ---------------------------------------------------------------------------
+# Language detection
+# ---------------------------------------------------------------------------
+*.sql linguist-detectable=true
+*.sql linguist-language=sql
+*.SQL linguist-detectable=true
+*.SQL linguist-language=sql
+
+
+
+*.py linguist-detectable=true
+*.py linguist-language=python
+
+
+# The SQL Server tree is the preserved reference implementation. It is counted
+# in language stats but excluded from diff noise reviews.
+sqlserver/database/northwind/northwind.sql linguist-generated=true
+
+# ---------------------------------------------------------------------------
+# Line endings
+# ---------------------------------------------------------------------------
+* text=auto
+
+# ---------------------------------------------------------------------------
+# Binary / non-diffable assets
+# ---------------------------------------------------------------------------
+*.xlsx binary
+*.xls  binary
+*.png  binary
+*.pdf  binary
+
+# ---------------------------------------------------------------------------
+# Golden-source preservation
+#
+# The sqlserver/ tree is a byte-for-byte reference implementation. Disabling
+# end-of-line conversion (-text) guarantees the stored blobs are never rewritten
+# by normalisation, including by an accidental `git add --renormalize`.
+# ---------------------------------------------------------------------------
+sqlserver/** -text
+
+# create_qastore.sql was exported by SSMS as UTF-16LE and is preserved byte for
+# byte as part of the golden-source reference. Marking it binary prevents Git
+# from mangling the BOM, converting line endings, or attempting a text diff.
+sqlserver/database/qastore/create_qastore.sql binary
