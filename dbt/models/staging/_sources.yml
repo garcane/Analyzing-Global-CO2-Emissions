@@ -1,0 +1,51 @@
+version: 2
+
+# RAW tables written by ingestion/ (all columns VARCHAR + load metadata). Freshness is measured on
+# _loaded_at_utc, i.e. when OUR pipeline last loaded the source. It cannot detect that a provider has
+# published something newer; that is detected by the file-hash check in the loader.
+sources:
+  - name: raw_ember
+    database: "{{ env_var('GEI_RAW_DATABASE', 'GEI_RAW') }}"
+    schema: ember
+    description: Ember yearly electricity data (bulk CSV and API extracts).
+    tables:
+      - name: generation_yearly
+        description: Ember yearly CSV, grain = area x year x electricity source. One row per source row in every load.
+        config:
+          loaded_at_field: _loaded_at_utc
+          # Ember publishes about twice a month; 45 days = one missed monthly release plus slack.
+          freshness:
+            warn_after: {count: 45, period: day}
+      - name: api_generation_yearly
+        description: Ember API /electricity-generation/yearly. Used only to reconcile against the CSV.
+        config:
+          loaded_at_field: _loaded_at_utc
+          freshness:
+            warn_after: {count: 45, period: day}
+      - name: api_demand_yearly
+        description: Ember API /electricity-demand/yearly (loaded, not yet modelled).
+      - name: api_emissions_yearly
+        description: Ember API /power-sector-emissions/yearly (loaded, not yet modelled).
+
+  - name: raw_owid
+    database: "{{ env_var('GEI_RAW_DATABASE', 'GEI_RAW') }}"
+    schema: owid
+    description: Our World in Data CO2 and greenhouse gas emissions dataset.
+    tables:
+      - name: co2
+        description: OWID CO2 CSV, grain = entity x year (countries and non-country aggregates).
+        config:
+          loaded_at_field: _loaded_at_utc
+          # OWID updates annually and irregularly; 400 days = one annual cycle plus slack.
+          freshness:
+            warn_after: {count: 400, period: day}
+
+  - name: raw_meta
+    database: "{{ env_var('GEI_RAW_DATABASE', 'GEI_RAW') }}"
+    schema: meta
+    description: Ingestion control tables written by the loader.
+    tables:
+      - name: ingestion_log
+        description: One row per load attempt (RUNNING / SUCCESS / FAILED).
+      - name: latest_successful_load
+        description: View. The single current successful load_id per source; staging reads only these rows.

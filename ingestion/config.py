@@ -67,7 +67,9 @@ class SnowflakeSettings:
             user=_require("SNOWFLAKE_USER"),
             role=os.environ.get("SNOWFLAKE_ROLE", "").strip() or "GEI_LOADER",
             warehouse=os.environ.get("SNOWFLAKE_WAREHOUSE", "").strip() or "GEI_WH",
-            database=os.environ.get("SNOWFLAKE_DATABASE", "").strip() or "RAW",
+            # Landing database for this project. A stale SNOWFLAKE_DATABASE is deliberately ignored so a
+            # leftover value can never send a load into another project's database.
+            database=os.environ.get("GEI_RAW_DATABASE", "").strip() or "GEI_RAW",
             authenticator=authenticator,
             private_key_path=Path(key_path) if key_path and authenticator == KEYPAIR else None,
             private_key_passphrase=os.environ.get("SNOWFLAKE_PRIVATE_KEY_PASSPHRASE") or None,

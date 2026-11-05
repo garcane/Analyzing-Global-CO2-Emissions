@@ -1,0 +1,164 @@
+version: 2
+
+models:
+  - name: dim_geography
+    description: >
+      One row per geography. Countries are keyed on ISO-3 (Kosovo = XKX); regions and aggregates
+      (World, EU, G20, ...) are keyed REG_<SLUG> and have is_country = false.
+    columns:
+      - name: geography_key
+        tests: [unique, not_null]
+      - name: entity_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['country', 'region']
+
+  - name: dim_energy_source
+    description: One row per Ember electricity-source label, with the renewable / low-carbon / generation classification.
+    columns:
+      - name: source_key
+        tests: [unique, not_null]
+
+  - name: fct_generation_by_source
+    description: >
+      Grain geography x year x generating source (9 base sources). Aggregates, Net imports and Demand are
+      excluded. generation_twh is energy; capacity_gw is nameplate power; never add one to the other.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key, year, source_key]
+    columns:
+      - name: geography_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_geography')
+                field: geography_key
+      - name: source_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_energy_source')
+                field: source_key
+      - name: generation_twh
+        description: TWh generated in the year. Must not be negative here (Net imports is excluded).
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0}
+      - name: capacity_gw
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0}
+      - name: power_emissions_mtco2e
+        description: Ember lifecycle emissions (upstream included), Mt CO2e.
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0}
+
+  - name: fct_electricity_balance
+    description: >
+      Grain geography x year. Ember's published demand, net imports (negative = net exporter), published
+      aggregates for reconciliation, and power-sector emissions / carbon intensity (lifecycle basis).
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key, year]
+    columns:
+      - name: geography_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_geography')
+                field: geography_key
+
+  - name: fct_country_economy_emissions
+    description: >
+      Grain country x year (OWID). Economy-wide territorial CO2 (combustion + industry, excl. land use) plus
+      population, GDP and primary energy. NOT electricity-sector emissions.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key, year]
+    columns:
+      - name: geography_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_geography')
+                field: geography_key
+      - name: national_co2_mt
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0}
+      - name: population
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0}
+
+  - name: mart_country_energy_profile
+    description: >
+      Grain country x year. Generation mix, shares, per-capita generation, demand/trade, capacity, power-sector
+      emissions (Ember, lifecycle) and economy-wide CO2 / GDP / population (OWID). Descriptive only.
+      Latest Ember years are provider estimates and coverage falls sharply in the final year.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key, year]
+    columns:
+      - name: geography_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_geography')
+                field: geography_key
+      - name: is_complete_year
+        description: True when the nine sources reconcile to Ember's published total (missing source rows count as 0 TWh).
+      - name: renewable_share_pct
+        description: Renewable generation / total generation x 100 (share of GENERATION, not of consumption). NULL unless is_complete_year.
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0, max_value: 100.01}
+      - name: fossil_share_pct
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0, max_value: 100.01}
+
+  - name: mart_renewable_growth
+    description: >
+      Grain country x year x series (solar, wind, hydro, renewables): generation, year-on-year change,
+      nameplate capacity and capacity factor.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key, year, series]
+    columns:
+      - name: series
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['solar', 'wind', 'hydro', 'renewables']
+      - name: capacity_factor
+        description: Generation / (nameplate capacity x hours). Values above 1 indicate a capacity-data issue.
+        tests:
+          - accepted_range:
+              arguments: {min_value: 0, max_value: 1.5}
+              config: {severity: warn}
+
+  - name: mart_energy_transition
+    description: >
+      Grain country (one window defined by vars transition_start_year / transition_end_year). Percentage-point
+      changes in mix, with GDP and CO2 change alongside. Associational: no causal claim.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [geography_key]
+    columns:
+      - name: is_eligible
+        description: Both endpoint years reconcile and start-year generation >= transition_min_generation_twh.
+        tests: [not_null]

@@ -1,0 +1,81 @@
+version: 2
+
+seeds:
+  - name: ref_country
+    description: >
+      ISO-3 country reference (maintained in data/reference/). Maps Ember and OWID names/codes to one key.
+      Kosovo is XKX (Ember) and has no ISO code in OWID, so it is matched by owid_name.
+    columns:
+      - name: iso3
+        tests: [unique, not_null]
+  - name: energy_source
+    description: Classification of every Ember "Electricity source" value (generation, aggregate, trade, demand).
+    columns:
+      - name: source_name
+        tests: [unique, not_null]
+
+models:
+  - name: stg_ember__generation_yearly
+    description: >
+      Ember yearly CSV, typed. One row per area x year x electricity source. Includes aggregate rows
+      (Total generation, Fossil, Renewables, ...), Demand and Net imports; downstream models separate them.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [area, year, electricity_source]
+    columns:
+      - name: area
+        tests: [not_null]
+      - name: year
+        tests:
+          - not_null
+          - accepted_range:
+              arguments: {min_value: 1985, max_value: 2100}
+      - name: area_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Country or economy', 'Region']
+      - name: electricity_source
+        description: Must exist in the energy_source seed; a new Ember label fails here, on purpose.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('energy_source')
+                field: source_name
+      - name: is_aggregated_source
+        tests: [not_null]
+      - name: iso3_code
+        description: ISO 3166-1 alpha-3 for countries (XKX for Kosovo); null for regions.
+      - name: generation_twh
+        description: >
+          TWh. Negative values are legitimate only for Net imports (net exporters); the non-negative
+          test therefore sits on fct_generation_by_source, which excludes Net imports.
+        tests: [not_null]
+
+  - name: stg_ember_api__generation_yearly
+    description: Ember API yearly generation, typed. Reconciliation source only.
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [entity, year, series]
+
+  - name: stg_owid__co2
+    description: OWID CO2 dataset, typed. Entities include non-country aggregates (no ISO code).
+    tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [country, year]
+    columns:
+      - name: country
+        tests: [not_null]
+      - name: year
+        tests:
+          - not_null
+          - accepted_range:
+              arguments: {min_value: 1700, max_value: 2100}
+      - name: gdp_intl_dollar_2011
+        description: International dollars, 2011 prices (Maddison Project 2023, per OWID codebook).
+      - name: primary_energy_twh
+        description: TWh (EIA and Energy Institute, per OWID codebook).

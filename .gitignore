@@ -31,3 +31,6 @@ snowflake_connector.py
 
 # API extracts (regenerable)
 data/api/
+
+# The dbt profile contains only env_var() lookups, no secrets: commit it.
+!dbt/profiles.yml

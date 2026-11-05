@@ -15,3 +15,8 @@ Status: Accepted unless stated. Date: 2026-11-05.
 11. **Dropped models:** `dim_date`, separate `fct_renewable_capacity` (same grain as generation), `mart_electricity_mix` and `mart_emissions_intensity` (folded into the profile mart).
 12. **Large CSVs stay committed in `data/`** (owner decision). Each Ember refresh adds ~16 MB to git history.
 13. **BI tool: Power BI.** Snowflake is a trial account: XS warehouse, auto-suspend 60 s, resource monitor.
+14. **Project-specific databases `GEI_RAW` and `GEI_ANALYTICS`** (names in `GEI_RAW_DATABASE` / `GEI_ANALYTICS_DATABASE`), separate from the tutorial data in `RAW` / `ANALYTICS`. The v1 setup granted `GEI_TRANSFORMER` access to tutorial schemas (`JAFFLE_SHOP`, `STRIPE`, `DBT_GARCANE`); v2 revokes that and scopes every grant to the new databases. The loader ignores a stale `SNOWFLAKE_DATABASE`.
+15. **A missing Ember source row means zero generation; completeness is judged by reconciliation** with Ember's published total, not by row presence (see metrics.md for the measurement).
+16. **dbt uses no external packages** (generic tests `accepted_range` and `unique_combination_of_columns` live in `dbt/macros/`), so `dbt deps` is not needed. dbt runs through `dbt/run_dbt.py`, which loads `.env` and uses the OS certificate store.
+17. **Schema naming:** the `prod` target writes the exact `STAGING` / `INTERMEDIATE` / `MARTS` schemas (so `GEI_REPORTER`'s grants on `MARTS` apply); `dev` and CI targets prefix them (`dbt_<name>_marts`). `dbt/profiles.yml` is committed because it contains only `env_var()` lookups.
+18. **Staging reads only the latest successful load** (`from_latest_load` macro over `META.LATEST_SUCCESSFUL_LOAD`); older loads stay in RAW for revision diffs.

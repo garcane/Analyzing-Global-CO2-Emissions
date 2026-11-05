@@ -1,0 +1,51 @@
+name: gei
+version: "0.1.0"
+config-version: 2
+profile: gei
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+# Reference seeds live with the other committed data, outside dbt/.
+seed-paths: ["../data/reference"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # Energy-transition window (mart_energy_transition). GDP in OWID ends in 2022, so the window ends there.
+  transition_start_year: 2010
+  transition_end_year: 2022
+  # Countries below this generation in the start year are not ranked: percentage-point changes for
+  # micro-grids are dominated by one or two plants. 1 TWh/yr is roughly a single 120 MW plant at 100%.
+  transition_min_generation_twh: 1
+  # Reconciliation tolerances. Observed maximum drift in Ember's own identities is 0.002 TWh
+  # (renewables = sum of parts), so 0.01 is a 5x margin for rounding; 0.05 covers the total identity,
+  # which has more terms and 3-decimal rounding.
+  tolerance_renewables_twh: 0.01
+  tolerance_total_twh: 0.05
+
+models:
+  gei:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  gei:
+    +schema: staging
+    ref_country:
+      +column_types:
+        iso3: varchar
+        is_country: boolean
+    energy_source:
+      +column_types:
+        is_aggregate: boolean
+        is_renewable: boolean
+        is_low_carbon: boolean
+        is_generation: boolean

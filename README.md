@@ -41,6 +41,7 @@ data/                CSV sources (committed) and data/reference/ seeds
 notebooks/legacy/    original exploratory notebook, kept unchanged (see its README for known defects)
 docs/                data sources, metric definitions, decision log
 ingestion/           Python extract / validate / load
+dbt/                 dbt project: staging -> intermediate -> marts (run via dbt/run_dbt.py)
 infra/               Snowflake one-time setup SQL (run manually)
 tests/unit/          pytest, no Snowflake needed
 ```

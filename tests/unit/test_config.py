@@ -36,7 +36,18 @@ def test_from_env_defaults_to_keypair_and_ignores_blank_values(monkeypatch, tmp_
                  "SNOWFLAKE_PRIVATE_KEY_PATH": str(tmp_path / "k.p8"), "SNOWFLAKE_AUTHENTICATOR": ""}.items():
         monkeypatch.setenv(k, v)
     s = SnowflakeSettings.from_env()
-    assert (s.authenticator, s.role, s.warehouse, s.database) == ("keypair", "GEI_LOADER", "GEI_WH", "RAW")
+    assert (s.authenticator, s.role, s.warehouse, s.database) == ("keypair", "GEI_LOADER", "GEI_WH", "GEI_RAW")
+
+
+def test_stale_snowflake_database_variable_is_ignored(monkeypatch):
+    monkeypatch.setattr("ingestion.config.load_dotenv", lambda *_a, **_k: None)
+    for k, v in {"SNOWFLAKE_ACCOUNT": "A-B", "SNOWFLAKE_USER": "U", "SNOWFLAKE_AUTHENTICATOR": "externalbrowser",
+                 "SNOWFLAKE_DATABASE": "RAW"}.items():
+        monkeypatch.setenv(k, v)
+    monkeypatch.delenv("GEI_RAW_DATABASE", raising=False)
+    assert SnowflakeSettings.from_env().database == "GEI_RAW"
+    monkeypatch.setenv("GEI_RAW_DATABASE", "OTHER_RAW")
+    assert SnowflakeSettings.from_env().database == "OTHER_RAW"
 
 
 def test_from_env_browser_mode_ignores_key_path(monkeypatch):

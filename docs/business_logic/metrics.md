@@ -1,8 +1,9 @@
 # Metric definitions
 
 Rules that apply to every metric:
-- **Null is not zero.** A zero is a zero only when the source reports 0.
-- Percentages use a same-row denominator and are suppressed when the year is incomplete (any base generating source missing for that country-year).
+- **Null is not zero** for measurements: an absent OWID value stays null; population is never imputed.
+- **Exception, verified on the 2026-11-05 Ember file:** a missing *generating-source row* (e.g. no Nuclear row) means zero generation. In 1,216 of 5,916 country-years at least one of the nine source rows is absent, and in every one the other sources add up to Ember's published total (0 mismatches over 0.05 TWh). Treating absence as null would have blanked 20.6% of country-years, so the models sum missing source rows as 0 TWh.
+- **A year is complete (`is_complete_year`)** when Ember published a total and the nine sources (missing = 0) reconcile to it within 0.05 TWh. Percentages use the published total as denominator and are NULL unless the year is complete.
 - TWh (energy) and GW (power) are only combined through the capacity-factor formula.
 - Never derive World/region values by summing countries (Ember's World ≠ Σ countries: 2023 = 29,788.6 vs 29,683.2 TWh).
 - Latest years (2024, 2025) are Ember estimates, and 2025 covers only 94 countries; marts carry `is_complete_year` and `coverage_note`.
