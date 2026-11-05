@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "wo_date",
   "position": {
     "x": 20,
     "y": 80,
-    "z": 1,
+    "z": 1000,
     "height": 300,
     "width": 250,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "slicer",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Values": {
@@ -28,7 +27,8 @@
                 }
               },
               "queryRef": "fct_generation_by_source.year",
-              "nativeQueryRef": "year"
+              "nativeQueryRef": "year",
+              "active": true
             }
           ]
         }
@@ -55,6 +55,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

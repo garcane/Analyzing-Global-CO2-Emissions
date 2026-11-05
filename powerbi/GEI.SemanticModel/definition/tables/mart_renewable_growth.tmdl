@@ -1,71 +1,86 @@
 table mart_renewable_growth
+	lineageTag: 11a37a79-0098-47b2-a301-edd32834cfa4
 
 	measure 'Generation TWh' = SUM ( mart_renewable_growth[generation_twh] )
 		formatString: #,##0.0
+		lineageTag: 05c7371c-fa9a-4b1c-92c9-e080a656933c
 
 	measure 'Capacity GW' = SUM ( mart_renewable_growth[capacity_gw] )
 		formatString: #,##0.0
+		lineageTag: c487a18a-f83f-4a66-a12a-e0603708a6c6
 
 	measure 'Hours in Year' = VAR y = SELECTEDVALUE ( mart_renewable_growth[year] ) RETURN IF ( ( MOD ( y, 4 ) = 0 && MOD ( y, 100 ) <> 0 ) || MOD ( y, 400 ) = 0, 8784, 8760 )
 		formatString: 0
+		lineageTag: 013099eb-56c5-4d99-9925-dd2075d2f4f5
 
 	measure 'Capacity Factor' = VAR cap = SUM ( mart_renewable_growth[capacity_gw] ) RETURN IF ( cap < 0.15, BLANK (), DIVIDE ( SUM ( mart_renewable_growth[generation_twh] ) * 1000, cap * [Hours in Year] ) )
 		formatString: 0.0%
+		lineageTag: 56a79e2e-ab7d-4b9f-953d-c4a8c835245c
 
 	column geography_key
 		dataType: string
 		isHidden
+		lineageTag: 490b3bd0-62a0-4f15-bfe0-9057c78de932
 		summarizeBy: none
 		sourceColumn: geography_key
 
 	column country_name
 		dataType: string
+		lineageTag: 21959265-01ae-4441-9dc7-4c60789dce2d
 		summarizeBy: none
 		sourceColumn: country_name
 
 	column continent
 		dataType: string
+		lineageTag: 6cf44b1f-5f83-494d-a8d8-aa57bb06b450
 		summarizeBy: none
 		sourceColumn: continent
 
 	column year
 		dataType: int64
 		formatString: 0
+		lineageTag: 320482af-9534-4fab-bf18-1798ade94751
 		summarizeBy: none
 		sourceColumn: year
 
 	column series
 		dataType: string
+		lineageTag: e4893fdc-7f35-4d7e-bfa3-c666f2d6c082
 		summarizeBy: none
 		sourceColumn: series
 
 	column generation_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 2f27aaad-ecaf-4392-b080-74d4cd5a21e2
 		summarizeBy: none
 		sourceColumn: generation_twh
 
 	column capacity_gw
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: e3dd4ebf-7e15-4deb-97e6-9a2f4c622b6c
 		summarizeBy: none
 		sourceColumn: capacity_gw
 
 	column yoy_change_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: f50163da-aab9-419b-a8c4-7233482e8dd8
 		summarizeBy: none
 		sourceColumn: yoy_change_twh
 
 	column yoy_change_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: b75683d5-92f7-4e9e-a624-aad5264aaefb
 		summarizeBy: none
 		sourceColumn: yoy_change_pct
 
 	column capacity_factor
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 1f59c6ba-92fa-44bd-b0ae-ade5a9adeab5
 		summarizeBy: none
 		sourceColumn: capacity_factor
 

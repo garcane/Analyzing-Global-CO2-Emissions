@@ -1,37 +1,18 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "tl_map",
   "position": {
     "x": 780,
     "y": 420,
-    "z": 4,
+    "z": 4000,
     "height": 290,
     "width": 480,
-    "tabOrder": 4
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "filledMap",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
-        "Location": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "mart_energy_transition"
-                    }
-                  },
-                  "Property": "country_name"
-                }
-              },
-              "queryRef": "mart_energy_transition.country_name",
-              "nativeQueryRef": "country_name"
-            }
-          ]
-        },
         "Color saturation": {
           "projections": [
             {
@@ -49,8 +30,65 @@
               "nativeQueryRef": "Renewable Share Change pp"
             }
           ]
+        },
+        "Location": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "country_name"
+                }
+              },
+              "queryRef": "mart_energy_transition.country_name",
+              "nativeQueryRef": "country_name"
+            }
+          ]
         }
       }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fillRule": {
+              "linearGradient2": {
+                "min": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'minColor'"
+                      }
+                    }
+                  }
+                },
+                "max": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'maxColor'"
+                      }
+                    }
+                  }
+                },
+                "nullColoringStrategy": {
+                  "strategy": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'asZero'"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [
@@ -73,6 +111,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

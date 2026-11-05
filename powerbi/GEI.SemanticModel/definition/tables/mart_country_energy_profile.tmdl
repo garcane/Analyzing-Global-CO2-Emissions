@@ -1,257 +1,310 @@
 table mart_country_energy_profile
+	lineageTag: 7d2971ad-327e-4ec4-9757-e3fcdd31701c
 
 	measure 'Total Generation TWh' = CALCULATE ( SUM ( mart_country_energy_profile[total_generation_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: f6aad148-b380-4f4b-97f6-822d6cf21139
 
 	measure 'Renewables TWh' = CALCULATE ( SUM ( mart_country_energy_profile[renewables_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: 07bc47a9-0fb7-429a-b5d3-c55c8fab18c7
 
 	measure 'Fossil TWh' = CALCULATE ( SUM ( mart_country_energy_profile[fossil_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: 408114a0-4b09-45a6-b1b9-07b2d0ed8148
 
 	measure 'Nuclear TWh' = CALCULATE ( SUM ( mart_country_energy_profile[nuclear_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: 1905e099-ffcd-4495-9d70-4aceba9b5a00
 
 	measure 'Solar TWh' = CALCULATE ( SUM ( mart_country_energy_profile[solar_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: d247dcd8-9be7-474f-abc7-cbfac463e56c
 
 	measure 'Wind TWh' = CALCULATE ( SUM ( mart_country_energy_profile[wind_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: 2e7ec242-50df-4191-8801-de3b0878deca
 
 	measure 'Hydro TWh' = CALCULATE ( SUM ( mart_country_energy_profile[hydro_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: 3b820613-6b50-4d39-a89f-8fd997028f3b
 
 	measure 'Coal TWh' = CALCULATE ( SUM ( mart_country_energy_profile[coal_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: e62fc8af-cff7-40b6-a60a-1f295da68868
 
 	measure 'Gas TWh' = CALCULATE ( SUM ( mart_country_energy_profile[gas_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
 		formatString: #,##0.0
+		lineageTag: ee9166e7-b1b1-4fae-9fc3-0821c99e74d9
 
 	measure 'Renewable Share' = DIVIDE ( [Renewables TWh], [Total Generation TWh] )
 		formatString: 0.0%
+		lineageTag: 756c526b-c59e-4f7c-894b-6fa687fe3291
 
 	measure 'Fossil Share' = DIVIDE ( [Fossil TWh], [Total Generation TWh] )
 		formatString: 0.0%
+		lineageTag: a7faa12e-cd3c-4319-8c4b-a35b613e6060
 
 	measure 'Coal Share' = DIVIDE ( [Coal TWh], [Total Generation TWh] )
 		formatString: 0.0%
+		lineageTag: e403e33f-b416-42b8-95d2-547dce0b12f0
 
 	measure 'Gas Share' = DIVIDE ( [Gas TWh], [Total Generation TWh] )
 		formatString: 0.0%
+		lineageTag: e7d8a6f6-542a-4fe7-b0cc-4c1e44336759
 
 	measure 'Wind + Solar Share' = DIVIDE ( [Wind TWh] + [Solar TWh], [Total Generation TWh] )
 		formatString: 0.0%
+		lineageTag: 9d241093-92e0-4df0-89e2-cc4c03f6375f
 
 	measure 'Generation per Capita kWh' = DIVIDE ( [Total Generation TWh] * 1000000000, SUM ( mart_country_energy_profile[population] ) )
 		formatString: #,##0
+		lineageTag: fea7266b-0bb5-410a-a5f4-35f78ad730fe
 
 	measure 'Renewables TWh PY' = VAR y = SELECTEDVALUE ( mart_country_energy_profile[year] ) RETURN CALCULATE ( [Renewables TWh], mart_country_energy_profile[year] = y - 1 )
 		formatString: #,##0.0
+		lineageTag: 8f3710e2-89ac-4388-89a1-11e1b0805f04
 
 	measure 'Renewables YoY TWh' = IF ( ISBLANK ( [Renewables TWh PY] ), BLANK (), [Renewables TWh] - [Renewables TWh PY] )
 		formatString: #,##0.0
+		lineageTag: bc6dba04-ae01-4956-a0fc-0451546c73f1
 
 	measure 'Power Carbon Intensity gCO2e per kWh' = DIVIDE ( SUM ( mart_country_energy_profile[power_emissions_mtco2e] ), CALCULATE ( SUM ( mart_country_energy_profile[total_generation_twh] ), NOT ISBLANK ( mart_country_energy_profile[power_emissions_mtco2e] ) ) ) * 1000
 		formatString: #,##0
+		lineageTag: 02d8ccf2-ce90-4cc1-b2e7-9726a13a1f58
 
 	column geography_key
 		dataType: string
 		isHidden
+		lineageTag: 0fcab7cc-c5d8-455e-8c1e-ed9c649671c6
 		summarizeBy: none
 		sourceColumn: geography_key
 
 	column country_name
 		dataType: string
+		lineageTag: 35244ee2-7b28-4e2b-aa21-877458d3d6e1
 		dataCategory: CountryRegion
 		summarizeBy: none
 		sourceColumn: country_name
 
 	column continent
 		dataType: string
+		lineageTag: eeb8a322-9f72-4322-8cce-150f92f06332
 		summarizeBy: none
 		sourceColumn: continent
 
 	column year
 		dataType: int64
 		formatString: 0
+		lineageTag: 0f1fd981-b08b-4928-96a2-504db8e3719a
 		summarizeBy: none
 		sourceColumn: year
 
 	column total_generation_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 93480772-a3fa-476b-bac2-c87de33589a2
 		summarizeBy: none
 		sourceColumn: total_generation_twh
 
 	column total_generation_recomputed_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: bdce9195-e2df-4ddb-8677-0bf75eb5a5ff
 		summarizeBy: none
 		sourceColumn: total_generation_recomputed_twh
 
 	column is_complete_year
 		dataType: boolean
+		lineageTag: 2be54d7d-616a-4c63-b180-9e967d8dac95
 		summarizeBy: none
 		sourceColumn: is_complete_year
 
 	column renewables_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 61241dfd-a86c-40c5-ae45-ea83e686e0f6
 		summarizeBy: none
 		sourceColumn: renewables_twh
 
 	column fossil_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: c3e1f885-9c25-4a4b-912c-75b6e24d1c57
 		summarizeBy: none
 		sourceColumn: fossil_twh
 
 	column nuclear_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 39e061cc-c5dc-4b37-ad9a-1f745d704aa0
 		summarizeBy: none
 		sourceColumn: nuclear_twh
 
 	column solar_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: e832b197-4e21-4c59-9d3e-6c181a60f53a
 		summarizeBy: none
 		sourceColumn: solar_twh
 
 	column wind_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 2b1f6506-152f-4b17-bce4-6f263374ad6e
 		summarizeBy: none
 		sourceColumn: wind_twh
 
 	column hydro_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: e502842a-57c7-44d7-aaa4-3bad55cdd06e
 		summarizeBy: none
 		sourceColumn: hydro_twh
 
 	column bioenergy_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 5d7b434a-2784-460a-850b-a1b6b46ad00e
 		summarizeBy: none
 		sourceColumn: bioenergy_twh
 
 	column coal_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 9f1ccda0-c7d4-45ef-b8ff-456336556de0
 		summarizeBy: none
 		sourceColumn: coal_twh
 
 	column gas_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 9bd21962-3d23-4385-94f9-bfdef4401f99
 		summarizeBy: none
 		sourceColumn: gas_twh
 
 	column demand_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 9c5a6993-61b1-4bcd-b75c-2668a3fb9386
 		summarizeBy: none
 		sourceColumn: demand_twh
 
 	column net_imports_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 80b627a5-957b-481b-9d01-b2508c58096c
 		summarizeBy: none
 		sourceColumn: net_imports_twh
 
 	column renewables_capacity_gw
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: c26f8ad5-21ac-4929-b853-7eab7374ed5a
 		summarizeBy: none
 		sourceColumn: renewables_capacity_gw
 
 	column power_emissions_mtco2e
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 30554642-9bd9-485b-b065-94202a7b7a28
 		summarizeBy: none
 		sourceColumn: power_emissions_mtco2e
 
 	column power_carbon_intensity_gco2e_kwh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: b160f6d8-5bc7-40f6-aaef-12e2f8e55f9d
 		summarizeBy: none
 		sourceColumn: power_carbon_intensity_gco2e_kwh
 
 	column population
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 9f21f961-df8e-4908-975b-089535d4aa31
 		summarizeBy: none
 		sourceColumn: population
 
 	column gdp_intl_dollar_2011
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 504abc9f-772b-4053-a8c4-118e34c3ab7a
 		summarizeBy: none
 		sourceColumn: gdp_intl_dollar_2011
 
 	column national_co2_mt
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 104cdea7-6dcd-4b48-9ad5-27d5a9960c1a
 		summarizeBy: none
 		sourceColumn: national_co2_mt
 
 	column national_co2_per_capita_t
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: d50cdb6a-4d4a-4f41-bb86-7eca4a687fa3
 		summarizeBy: none
 		sourceColumn: national_co2_per_capita_t
 
 	column primary_energy_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 30d84021-bdf6-42e3-bd66-108253bec217
 		summarizeBy: none
 		sourceColumn: primary_energy_twh
 
 	column has_economy_row
 		dataType: boolean
+		lineageTag: bcc261ae-4276-4457-b25a-c95d7f2a24cf
 		summarizeBy: none
 		sourceColumn: has_economy_row
 
 	column renewable_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: b91aa0f1-ac20-420e-954f-420c8add3c98
 		summarizeBy: none
 		sourceColumn: renewable_share_pct
 
 	column fossil_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 94265ee5-e5bd-42dd-9619-662e816ce9cb
 		summarizeBy: none
 		sourceColumn: fossil_share_pct
 
 	column nuclear_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 08cf8ba2-0683-4e80-8968-bbb74dc403f4
 		summarizeBy: none
 		sourceColumn: nuclear_share_pct
 
 	column wind_solar_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: a7b76c77-dd50-43f9-a580-b62b68880293
 		summarizeBy: none
 		sourceColumn: wind_solar_share_pct
 
 	column coal_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 19aebdcc-5547-421e-b92b-61a750c963e2
 		summarizeBy: none
 		sourceColumn: coal_share_pct
 
 	column gas_share_pct
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: e40b1613-89ba-4c71-bfb2-b7f2e3765e8f
 		summarizeBy: none
 		sourceColumn: gas_share_pct
 
 	column generation_per_capita_kwh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 9468595f-c87b-4516-abe7-c048df60c384
 		summarizeBy: none
 		sourceColumn: generation_per_capita_kwh
 

@@ -17,3 +17,4 @@ relationship b98aec74-5080-5a7a-b752-b4ecb7b15c4b
 relationship 7cecbf99-c737-5dc2-92d7-269d2dea8cc7
 	fromColumn: mart_energy_transition.geography_key
 	toColumn: dim_geography.geography_key
+

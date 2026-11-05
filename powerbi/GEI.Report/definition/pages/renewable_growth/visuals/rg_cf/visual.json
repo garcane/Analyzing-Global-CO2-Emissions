@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "rg_cf",
   "position": {
     "x": 780,
     "y": 80,
-    "z": 4,
+    "z": 4000,
     "height": 300,
     "width": 480,
-    "tabOrder": 4
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "lineChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -28,25 +27,8 @@
                 }
               },
               "queryRef": "mart_renewable_growth.year",
-              "nativeQueryRef": "year"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "mart_renewable_growth"
-                    }
-                  },
-                  "Property": "Capacity Factor"
-                }
-              },
-              "queryRef": "mart_renewable_growth.Capacity Factor",
-              "nativeQueryRef": "Capacity Factor"
+              "nativeQueryRef": "year",
+              "active": true
             }
           ]
         },
@@ -65,6 +47,24 @@
               },
               "queryRef": "mart_renewable_growth.series",
               "nativeQueryRef": "series"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "Capacity Factor"
+                }
+              },
+              "queryRef": "mart_renewable_growth.Capacity Factor",
+              "nativeQueryRef": "Capacity Factor"
             }
           ]
         }
@@ -91,6 +91,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ee_scatter",
   "position": {
     "x": 290,
     "y": 110,
-    "z": 2,
+    "z": 3000,
     "height": 290,
     "width": 970,
-    "tabOrder": 3
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "scatterChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -28,43 +27,8 @@
                 }
               },
               "queryRef": "mart_energy_transition.country_name",
-              "nativeQueryRef": "country_name"
-            }
-          ]
-        },
-        "X": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "mart_energy_transition"
-                    }
-                  },
-                  "Property": "GDP Growth Pct"
-                }
-              },
-              "queryRef": "mart_energy_transition.GDP Growth Pct",
-              "nativeQueryRef": "GDP Growth Pct"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "mart_energy_transition"
-                    }
-                  },
-                  "Property": "CO2 Change Pct"
-                }
-              },
-              "queryRef": "mart_energy_transition.CO2 Change Pct",
-              "nativeQueryRef": "CO2 Change Pct"
+              "nativeQueryRef": "country_name",
+              "active": true
             }
           ]
         },
@@ -83,6 +47,43 @@
               },
               "queryRef": "mart_energy_transition.is_economy_co2_decoupled",
               "nativeQueryRef": "is_economy_co2_decoupled"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "GDP Growth Pct"
+                }
+              },
+              "queryRef": "mart_energy_transition.GDP Growth Pct",
+              "nativeQueryRef": "GDP Growth Pct",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "CO2 Change Pct"
+                }
+              },
+              "queryRef": "mart_energy_transition.CO2 Change Pct",
+              "nativeQueryRef": "CO2 Change Pct"
             }
           ]
         }
@@ -109,6 +110,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

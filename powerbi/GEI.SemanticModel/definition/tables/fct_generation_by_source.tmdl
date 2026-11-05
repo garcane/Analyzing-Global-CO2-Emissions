@@ -1,44 +1,53 @@
 table fct_generation_by_source
+	lineageTag: aa2fa170-076e-4e93-b61e-057b7c858ed2
 
 	measure 'World Generation TWh' = CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD" )
 		formatString: #,##0
+		lineageTag: 9d0bb55c-7bfa-47d9-a013-a767bd1e82df
 
 	measure 'World Renewable Share' = DIVIDE ( CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD", dim_energy_source[is_renewable] = TRUE () ), [World Generation TWh] )
 		formatString: 0.0%
+		lineageTag: e7326f8d-ceed-493a-a4e5-a36a15736e12
 
 	column geography_key
 		dataType: string
 		isHidden
+		lineageTag: fa17c463-bfaa-4b80-927a-75d3d9d890d0
 		summarizeBy: none
 		sourceColumn: geography_key
 
 	column year
 		dataType: int64
 		formatString: 0
+		lineageTag: a8b6ea9c-5963-4603-a1de-a24be645fa0c
 		summarizeBy: none
 		sourceColumn: year
 
 	column source_key
 		dataType: string
 		isHidden
+		lineageTag: 9b30a893-a75b-4c23-9730-613a8efa85f8
 		summarizeBy: none
 		sourceColumn: source_key
 
 	column generation_twh
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: feed9c6b-64da-4eb5-9ef5-263a1edc3c70
 		summarizeBy: none
 		sourceColumn: generation_twh
 
 	column capacity_gw
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 58a5ece5-d7fd-4e2d-b2bc-3fa1f9cdf844
 		summarizeBy: none
 		sourceColumn: capacity_gw
 
 	column power_emissions_mtco2e
 		dataType: double
 		formatString: #,##0.00
+		lineageTag: 3b07ff94-2aab-451c-a896-c4462f6bd151
 		summarizeBy: none
 		sourceColumn: power_emissions_mtco2e
 
