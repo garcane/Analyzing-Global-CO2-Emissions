@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "wo_mix",
   "position": {
     "x": 20,
@@ -7,7 +7,7 @@
     "z": 3,
     "height": 300,
     "width": 1240,
-    "tabOrder": 3
+    "tabOrder": 4
   },
   "visual": {
     "visualType": "areaChart",

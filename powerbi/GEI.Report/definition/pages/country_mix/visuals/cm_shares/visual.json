@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "cm_shares",
   "position": {
     "x": 290,
@@ -7,7 +7,7 @@
     "z": 2,
     "height": 300,
     "width": 480,
-    "tabOrder": 2
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "lineChart",

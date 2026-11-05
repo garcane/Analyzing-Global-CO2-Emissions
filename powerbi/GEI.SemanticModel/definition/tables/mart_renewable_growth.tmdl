@@ -1,77 +1,73 @@
 table mart_renewable_growth
 
-	measure 'Generation TWh' =
-			SUM ( mart_renewable_growth[generation_twh] )
+	measure 'Generation TWh' = SUM ( mart_renewable_growth[generation_twh] )
 		formatString: #,##0.0
 
-	measure 'Capacity GW' =
-			SUM ( mart_renewable_growth[capacity_gw] )
+	measure 'Capacity GW' = SUM ( mart_renewable_growth[capacity_gw] )
 		formatString: #,##0.0
 
-	measure 'Hours in Year' =
-			VAR y = SELECTEDVALUE ( mart_renewable_growth[year] ) RETURN IF ( ( MOD ( y, 4 ) = 0 && MOD ( y, 100 ) <> 0 ) || MOD ( y, 400 ) = 0, 8784, 8760 )
+	measure 'Hours in Year' = VAR y = SELECTEDVALUE ( mart_renewable_growth[year] ) RETURN IF ( ( MOD ( y, 4 ) = 0 && MOD ( y, 100 ) <> 0 ) || MOD ( y, 400 ) = 0, 8784, 8760 )
 		formatString: 0
 
-	measure 'Capacity Factor' =
-			VAR cap = SUM ( mart_renewable_growth[capacity_gw] ) RETURN IF ( cap < 0.15, BLANK (), DIVIDE ( SUM ( mart_renewable_growth[generation_twh] ) * 1000, cap * [Hours in Year] ) )
+	measure 'Capacity Factor' = VAR cap = SUM ( mart_renewable_growth[capacity_gw] ) RETURN IF ( cap < 0.15, BLANK (), DIVIDE ( SUM ( mart_renewable_growth[generation_twh] ) * 1000, cap * [Hours in Year] ) )
 		formatString: 0.0%
 
 	column geography_key
 		dataType: string
 		isHidden
-		sourceColumn: geography_key
 		summarizeBy: none
+		sourceColumn: geography_key
 
 	column country_name
 		dataType: string
-		sourceColumn: country_name
 		summarizeBy: none
+		sourceColumn: country_name
 
 	column continent
 		dataType: string
-		sourceColumn: continent
 		summarizeBy: none
+		sourceColumn: continent
 
 	column year
 		dataType: int64
 		formatString: 0
-		sourceColumn: year
 		summarizeBy: none
+		sourceColumn: year
 
 	column series
 		dataType: string
-		sourceColumn: series
 		summarizeBy: none
+		sourceColumn: series
 
 	column generation_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: generation_twh
 		summarizeBy: none
+		sourceColumn: generation_twh
 
 	column capacity_gw
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: capacity_gw
 		summarizeBy: none
+		sourceColumn: capacity_gw
 
 	column yoy_change_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: yoy_change_twh
 		summarizeBy: none
+		sourceColumn: yoy_change_twh
 
 	column yoy_change_pct
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: yoy_change_pct
 		summarizeBy: none
+		sourceColumn: yoy_change_pct
 
 	column capacity_factor
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: capacity_factor
 		summarizeBy: none
+		sourceColumn: capacity_factor
 
 	partition mart_renewable_growth = m
 		mode: import
@@ -82,3 +78,4 @@ table mart_renewable_growth
 					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"country_name", type text}, {"continent", type text}, {"year", Int64.Type}, {"series", type text}, {"generation_twh", type number}, {"capacity_gw", type number}, {"yoy_change_twh", type number}, {"yoy_change_pct", type number}, {"capacity_factor", type number}}, "en-US")
 				in
 					Typed
+

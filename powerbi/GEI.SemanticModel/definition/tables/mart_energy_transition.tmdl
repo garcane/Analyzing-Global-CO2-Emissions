@@ -1,160 +1,154 @@
 table mart_energy_transition
 
-	measure 'Renewable Share Change pp' =
-			SUM ( mart_energy_transition[renewable_share_change_pp] )
+	measure 'Renewable Share Change pp' = SUM ( mart_energy_transition[renewable_share_change_pp] )
 		formatString: 0.0
 
-	measure 'Renewables Change TWh' =
-			SUM ( mart_energy_transition[renewables_change_twh] )
+	measure 'Renewables Change TWh' = SUM ( mart_energy_transition[renewables_change_twh] )
 		formatString: #,##0.0
 
-	measure 'Total Generation Change TWh' =
-			SUM ( mart_energy_transition[total_generation_change_twh] )
+	measure 'Total Generation Change TWh' = SUM ( mart_energy_transition[total_generation_change_twh] )
 		formatString: #,##0.0
 
-	measure 'GDP Growth Pct' =
-			SUM ( mart_energy_transition[gdp_growth_pct] )
+	measure 'GDP Growth Pct' = SUM ( mart_energy_transition[gdp_growth_pct] )
 		formatString: 0.0
 
-	measure 'CO2 Change Pct' =
-			SUM ( mart_energy_transition[national_co2_change_pct] )
+	measure 'CO2 Change Pct' = SUM ( mart_energy_transition[national_co2_change_pct] )
 		formatString: 0.0
 
-	measure 'Eligible Countries' =
-			CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE () )
+	measure 'Eligible Countries' = CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE () )
 		formatString: 0
 
-	measure 'Decoupled Countries' =
-			CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE (), mart_energy_transition[is_economy_co2_decoupled] = TRUE () )
+	measure 'Decoupled Countries' = CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE (), mart_energy_transition[is_economy_co2_decoupled] = TRUE () )
 		formatString: 0
 
 	column geography_key
 		dataType: string
 		isHidden
-		sourceColumn: geography_key
 		summarizeBy: none
+		sourceColumn: geography_key
 
 	column country_name
 		dataType: string
-		sourceColumn: country_name
+		dataCategory: CountryRegion
 		summarizeBy: none
+		sourceColumn: country_name
 
 	column continent
 		dataType: string
-		sourceColumn: continent
 		summarizeBy: none
+		sourceColumn: continent
 
 	column start_year
 		dataType: int64
 		formatString: 0
-		sourceColumn: start_year
 		summarizeBy: none
+		sourceColumn: start_year
 
 	column end_year
 		dataType: int64
 		formatString: 0
-		sourceColumn: end_year
 		summarizeBy: none
+		sourceColumn: end_year
 
 	column start_generation_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: start_generation_twh
 		summarizeBy: none
+		sourceColumn: start_generation_twh
 
 	column end_generation_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: end_generation_twh
 		summarizeBy: none
+		sourceColumn: end_generation_twh
 
 	column start_renewable_share_pct
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: start_renewable_share_pct
 		summarizeBy: none
+		sourceColumn: start_renewable_share_pct
 
 	column end_renewable_share_pct
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: end_renewable_share_pct
 		summarizeBy: none
+		sourceColumn: end_renewable_share_pct
 
 	column renewable_share_change_pp
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: renewable_share_change_pp
 		summarizeBy: none
+		sourceColumn: renewable_share_change_pp
 
 	column total_generation_change_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: total_generation_change_twh
 		summarizeBy: none
+		sourceColumn: total_generation_change_twh
 
 	column renewables_change_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: renewables_change_twh
 		summarizeBy: none
+		sourceColumn: renewables_change_twh
 
 	column fossil_share_change_pp
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: fossil_share_change_pp
 		summarizeBy: none
+		sourceColumn: fossil_share_change_pp
 
 	column coal_share_change_pp
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: coal_share_change_pp
 		summarizeBy: none
+		sourceColumn: coal_share_change_pp
 
 	column gas_share_change_pp
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: gas_share_change_pp
 		summarizeBy: none
+		sourceColumn: gas_share_change_pp
 
 	column carbon_intensity_change_gco2e_kwh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: carbon_intensity_change_gco2e_kwh
 		summarizeBy: none
+		sourceColumn: carbon_intensity_change_gco2e_kwh
 
 	column gdp_growth_pct
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: gdp_growth_pct
 		summarizeBy: none
+		sourceColumn: gdp_growth_pct
 
 	column national_co2_change_pct
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: national_co2_change_pct
 		summarizeBy: none
+		sourceColumn: national_co2_change_pct
 
 	column is_economy_co2_decoupled
 		dataType: boolean
-		sourceColumn: is_economy_co2_decoupled
 		summarizeBy: none
+		sourceColumn: is_economy_co2_decoupled
 
 	column is_eligible
 		dataType: boolean
-		sourceColumn: is_eligible
 		summarizeBy: none
+		sourceColumn: is_eligible
 
 	column renewable_share_change_rank
 		dataType: int64
 		formatString: 0
-		sourceColumn: renewable_share_change_rank
 		summarizeBy: none
+		sourceColumn: renewable_share_change_rank
 
 	column renewables_growth_twh_rank
 		dataType: int64
 		formatString: 0
-		sourceColumn: renewables_growth_twh_rank
 		summarizeBy: none
+		sourceColumn: renewables_growth_twh_rank
 
 	partition mart_energy_transition = m
 		mode: import
@@ -165,3 +159,4 @@ table mart_energy_transition
 					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"country_name", type text}, {"continent", type text}, {"start_year", Int64.Type}, {"end_year", Int64.Type}, {"start_generation_twh", type number}, {"end_generation_twh", type number}, {"start_renewable_share_pct", type number}, {"end_renewable_share_pct", type number}, {"renewable_share_change_pp", type number}, {"total_generation_change_twh", type number}, {"renewables_change_twh", type number}, {"fossil_share_change_pp", type number}, {"coal_share_change_pp", type number}, {"gas_share_change_pp", type number}, {"carbon_intensity_change_gco2e_kwh", type number}, {"gdp_growth_pct", type number}, {"national_co2_change_pct", type number}, {"is_economy_co2_decoupled", type logical}, {"is_eligible", type logical}, {"renewable_share_change_rank", Int64.Type}, {"renewables_growth_twh_rank", Int64.Type}}, "en-US")
 				in
 					Typed
+

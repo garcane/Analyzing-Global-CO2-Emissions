@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "wo_generation",
   "position": {
-    "x": 650,
+    "x": 780,
     "y": 80,
     "z": 2,
     "height": 300,
-    "width": 610,
-    "tabOrder": 2
+    "width": 480,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "lineChart",

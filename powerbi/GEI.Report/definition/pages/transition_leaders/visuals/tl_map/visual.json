@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "tl_map",
+  "position": {
+    "x": 780,
+    "y": 420,
+    "z": 4,
+    "height": 290,
+    "width": 480,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "filledMap",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Location": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "country_name"
+                }
+              },
+              "queryRef": "mart_energy_transition.country_name",
+              "nativeQueryRef": "country_name"
+            }
+          ]
+        },
+        "Color saturation": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "Renewable Share Change pp"
+                }
+              },
+              "queryRef": "mart_energy_transition.Renewable Share Change pp",
+              "nativeQueryRef": "Renewable Share Change pp"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Renewable share change (pp) by country'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

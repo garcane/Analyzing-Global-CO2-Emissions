@@ -1,11 +1,11 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "cm_slicer",
   "position": {
     "x": 20,
     "y": 80,
     "z": 1,
-    "height": 620,
+    "height": 400,
     "width": 250,
     "tabOrder": 1
   },

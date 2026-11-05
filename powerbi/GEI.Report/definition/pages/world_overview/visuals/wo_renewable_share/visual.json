@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "wo_renewable_share",
   "position": {
-    "x": 20,
+    "x": 290,
     "y": 80,
     "z": 1,
     "height": 300,
-    "width": 610,
-    "tabOrder": 1
+    "width": 470,
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "lineChart",

@@ -2,7 +2,12 @@
 
 Audience: someone judging whether the energy transition is real, where, and how it relates to emissions and
 growth. Every page carries a one-line label: **Descriptive** (levels, shares, growth) or **Association** (two
-things moved together; no causal claim). Default year slicer: 2023 (2024-2025 are partial and estimated).
+things moved together; no causal claim). 2023 is the recommended latest complete year (2024-2025 are partial and
+estimated); the year slicers expose all available years.
+
+Year slicers on annual-analysis pages use `dim_date[Year Label]`, a calculated annual dimension related to the
+annual facts. Transition leaders is a fixed 2010-2022 comparison window, not annual-grain data. Country mix maps
+renewable share by country; Transition leaders maps renewable-share change in percentage points for that window.
 
 | Page | Business question(s) | Visuals | Label |
 |---|---|---|---|
@@ -52,8 +57,9 @@ Compare these with the visuals (all computed from the exported marts on 2026-11-
 | Top 5 by absolute renewable growth 2010-2022 | China 1,823.5; United States 533.7; India 221.3; Brazil 156.5; Germany 146.1 TWh |
 | Largest solar year-on-year gain, 2023 | China +156.9 TWh; United States +33.9; Brazil +20.5 |
 
-## Building it (Power BI Desktop, Windows)
-I cannot create the `.pbix` file for you. Steps: load the six CSVs (or connect to Snowflake, see `model.md`),
-create the relationships, paste the measures from `measures.dax` (New measure), build the six pages above, then
-check the table. Save the file outside git if it is large, or in `docs/powerbi/` if you prefer to commit it.
+## The project
+The model and the six pages above exist as a Power BI Project in `powerbi/GEI.pbip` (see `powerbi/README.md`
+for how to open it and for what has and has not been verified). It was generated as text files and **has not yet
+been opened in Power BI Desktop**: open it, refresh, and check the numbers in the table above. The measures in
+`measures.dax` are the same ones that are in the project's model.
 Screenshots of the finished pages belong in `docs/img/` and the README.

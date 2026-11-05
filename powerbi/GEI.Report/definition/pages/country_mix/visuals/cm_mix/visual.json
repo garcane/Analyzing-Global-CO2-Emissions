@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "cm_mix",
   "position": {
-    "x": 290,
+    "x": 780,
     "y": 400,
     "z": 4,
     "height": 300,
-    "width": 970,
-    "tabOrder": 4
+    "width": 480,
+    "tabOrder": 6
   },
   "visual": {
     "visualType": "stackedColumnChart",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "rg_year",
   "position": {
     "x": 20,
@@ -21,14 +21,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "mart_country_energy_profile"
+                      "Entity": "dim_date"
                     }
                   },
-                  "Property": "year"
+                  "Property": "Year Label"
                 }
               },
-              "queryRef": "mart_country_energy_profile.year",
-              "nativeQueryRef": "year"
+              "queryRef": "dim_date.Year Label",
+              "nativeQueryRef": "Year Label"
             }
           ]
         }
@@ -48,7 +48,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Year (for the table)'"
+                  "Value": "'Year'"
                 }
               }
             }

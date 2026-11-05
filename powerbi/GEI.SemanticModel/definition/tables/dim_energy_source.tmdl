@@ -3,38 +3,38 @@ table dim_energy_source
 	column source_key
 		dataType: string
 		isHidden
-		sourceColumn: source_key
 		summarizeBy: none
+		sourceColumn: source_key
 
 	column source_name
 		dataType: string
-		sourceColumn: source_name
 		summarizeBy: none
+		sourceColumn: source_name
 
 	column category
 		dataType: string
-		sourceColumn: category
 		summarizeBy: none
+		sourceColumn: category
 
 	column is_aggregate
 		dataType: boolean
-		sourceColumn: is_aggregate
 		summarizeBy: none
+		sourceColumn: is_aggregate
 
 	column is_renewable
 		dataType: boolean
-		sourceColumn: is_renewable
 		summarizeBy: none
+		sourceColumn: is_renewable
 
 	column is_low_carbon
 		dataType: boolean
-		sourceColumn: is_low_carbon
 		summarizeBy: none
+		sourceColumn: is_low_carbon
 
 	column is_generation
 		dataType: boolean
-		sourceColumn: is_generation
 		summarizeBy: none
+		sourceColumn: is_generation
 
 	partition dim_energy_source = m
 		mode: import
@@ -45,3 +45,4 @@ table dim_energy_source
 					Typed = Table.TransformColumnTypes(Promoted, {{"source_key", type text}, {"source_name", type text}, {"category", type text}, {"is_aggregate", type logical}, {"is_renewable", type logical}, {"is_low_carbon", type logical}, {"is_generation", type logical}}, "en-US")
 				in
 					Typed
+

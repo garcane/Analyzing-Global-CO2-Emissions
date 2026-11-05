@@ -1,48 +1,46 @@
 table fct_generation_by_source
 
-	measure 'World Generation TWh' =
-			CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD" )
+	measure 'World Generation TWh' = CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD" )
 		formatString: #,##0
 
-	measure 'World Renewable Share' =
-			DIVIDE ( CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD", dim_energy_source[is_renewable] = TRUE () ), [World Generation TWh] )
+	measure 'World Renewable Share' = DIVIDE ( CALCULATE ( SUM ( fct_generation_by_source[generation_twh] ), dim_geography[geography_key] = "REG_WORLD", dim_energy_source[is_renewable] = TRUE () ), [World Generation TWh] )
 		formatString: 0.0%
 
 	column geography_key
 		dataType: string
 		isHidden
-		sourceColumn: geography_key
 		summarizeBy: none
+		sourceColumn: geography_key
 
 	column year
 		dataType: int64
 		formatString: 0
-		sourceColumn: year
 		summarizeBy: none
+		sourceColumn: year
 
 	column source_key
 		dataType: string
 		isHidden
-		sourceColumn: source_key
 		summarizeBy: none
+		sourceColumn: source_key
 
 	column generation_twh
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: generation_twh
 		summarizeBy: none
+		sourceColumn: generation_twh
 
 	column capacity_gw
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: capacity_gw
 		summarizeBy: none
+		sourceColumn: capacity_gw
 
 	column power_emissions_mtco2e
 		dataType: double
 		formatString: #,##0.00
-		sourceColumn: power_emissions_mtco2e
 		summarizeBy: none
+		sourceColumn: power_emissions_mtco2e
 
 	partition fct_generation_by_source = m
 		mode: import
@@ -53,3 +51,4 @@ table fct_generation_by_source
 					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"year", Int64.Type}, {"source_key", type text}, {"generation_twh", type number}, {"capacity_gw", type number}, {"power_emissions_mtco2e", type number}}, "en-US")
 				in
 					Typed
+

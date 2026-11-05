@@ -10,14 +10,18 @@ production `GEI_ANALYTICS.MARTS` schema). The same six tables can be imported st
 dim_geography (geography_key) 1 ──< * fct_generation_by_source (geography_key)
 dim_geography (geography_key) 1 ──< * mart_country_energy_profile (geography_key)
 dim_geography (geography_key) 1 ──< * mart_renewable_growth (geography_key)
-dim_geography (geography_key) 1 ──  1 mart_energy_transition (geography_key)
+dim_geography (geography_key) 1 ──< * mart_energy_transition (geography_key)
 dim_energy_source (source_key) 1 ──< * fct_generation_by_source (source_key)
+dim_date (Year) 1 ──< * fct_generation_by_source (year)
+dim_date (Year) 1 ──< * mart_country_energy_profile (year)
+dim_date (Year) 1 ──< * mart_renewable_growth (year)
 ```
 
 All relationships single direction (dimension filters fact), no bi-directional filtering.
 
 | Table | Grain | Use |
 |---|---|---|
+| `dim_date` | one row per reporting year; `Date` is January 1 of that year | year slicers for annual generation and country analysis |
 | `dim_geography` | one row per geography (229 countries, 15 regions incl. `REG_WORLD`) | slicers: country, continent; `is_country` filter |
 | `dim_energy_source` | one row per Ember source label | `is_renewable`, `category` |
 | `fct_generation_by_source` | geography x year x source | mix charts, World trend (includes regions) |
@@ -38,7 +42,7 @@ All relationships single direction (dimension filters fact), no bi-directional f
 2. **Never sum countries to get the World.** Use the `REG_WORLD` rows of `fct_generation_by_source` (Ember's own
    World figure; summing 2023 countries gives 29,683 TWh against Ember's 29,789 TWh).
 3. Country pages filter `dim_geography[is_country] = TRUE`; the World page filters `REG_WORLD`.
-4. 2024 has 194 countries and 2025 only 94 (partial and estimated): default year slicers to 2023 or earlier.
+4. 2024 has 194 countries and 2025 only 94 (partial and estimated): use year slicers at 2023 or earlier for complete coverage.
 5. Power-sector emissions (Ember, lifecycle) and national CO2 (OWID, combustion) are different measures:
    label them separately and never put them on the same axis.
 

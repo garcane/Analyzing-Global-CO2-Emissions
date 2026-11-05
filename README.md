@@ -10,7 +10,7 @@ OWID CO₂ (CSV) ────┼─> Python ingestion ─> Snowflake RAW ─> db
 ISO reference ─────┘
 ```
 
-**Status:** Phase 1 (scope, reference data, environment) done. Phase 2 done: the Ember CSV, Ember API and OWID CO₂ data are loaded into Snowflake `GEI_RAW` and reconciled (see [docs/snowflake_setup.md](docs/snowflake_setup.md)). Phase 3 done: the dbt project builds 13 models and passes 70 of 71 tests (one warning: 16 implausible capacity factors caused by Ember capacity placeholders). Phase 4 done in code: offline CI (`.github/workflows/ci.yml`), a manual Snowflake build workflow, repo-hygiene and staging-contract tests, a row-count-change warning and an operations runbook ([docs/operations.md](docs/operations.md)). Phase 5: the reporting tables are exported to `data/exports/` and the Power BI model, DAX measures and report specification are in [docs/powerbi/](docs/powerbi/); the `.pbix` itself is built in Power BI Desktop and is not in the repo yet.
+**Status:** Phase 1 (scope, reference data, environment) done. Phase 2 done: the Ember CSV, Ember API and OWID CO₂ data are loaded into Snowflake `GEI_RAW` and reconciled (see [docs/snowflake_setup.md](docs/snowflake_setup.md)). Phase 3 done: the dbt project builds 13 models and passes 70 of 71 tests (one warning: 16 implausible capacity factors caused by Ember capacity placeholders). Phase 4 done in code: offline CI (`.github/workflows/ci.yml`), a manual Snowflake build workflow, repo-hygiene and staging-contract tests, a row-count-change warning and an operations runbook ([docs/operations.md](docs/operations.md)). Phase 5: the reporting tables are exported to `data/exports/` and the Power BI model, DAX measures and report specification are in [docs/powerbi/](docs/powerbi/); the dashboard is a Power BI Project in [powerbi/](powerbi/README.md) (6 pages, generated as text files, schema-validated, **not yet opened in Power BI Desktop**).
 
 ## Data
 
@@ -44,7 +44,8 @@ ingestion/           Python extract / validate / load
 dbt/                 dbt project: staging -> intermediate -> marts (run via dbt/run_dbt.py)
 infra/               Snowflake one-time setup and cleanup SQL (run manually)
 data/exports/        reporting tables as CSV, the inputs for Power BI
-docs/powerbi/        Power BI model, DAX measures, report specification
+powerbi/             Power BI Project (GEI.pbip): TMDL model + PBIR report
+docs/powerbi/        Power BI model rules, DAX measures, report specification
 .github/workflows/   CI (offline) and a manual Snowflake build
 tests/unit/          pytest, no Snowflake needed
 ```

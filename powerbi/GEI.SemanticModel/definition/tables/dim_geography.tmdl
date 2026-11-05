@@ -3,28 +3,28 @@ table dim_geography
 	column geography_key
 		dataType: string
 		isHidden
-		sourceColumn: geography_key
 		summarizeBy: none
+		sourceColumn: geography_key
 
 	column geography_name
 		dataType: string
-		sourceColumn: geography_name
 		summarizeBy: none
+		sourceColumn: geography_name
 
 	column entity_type
 		dataType: string
-		sourceColumn: entity_type
 		summarizeBy: none
+		sourceColumn: entity_type
 
 	column continent
 		dataType: string
-		sourceColumn: continent
 		summarizeBy: none
+		sourceColumn: continent
 
 	column is_country
 		dataType: boolean
-		sourceColumn: is_country
 		summarizeBy: none
+		sourceColumn: is_country
 
 	partition dim_geography = m
 		mode: import
@@ -35,3 +35,4 @@ table dim_geography
 					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"geography_name", type text}, {"entity_type", type text}, {"continent", type text}, {"is_country", type logical}}, "en-US")
 				in
 					Typed
+

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "tl_table",
   "position": {
     "x": 20,
     "y": 420,
     "z": 3,
     "height": 290,
-    "width": 1240,
+    "width": 740,
     "tabOrder": 3
   },
   "visual": {

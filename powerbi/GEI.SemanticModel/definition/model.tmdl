@@ -1,9 +1,9 @@
 model Model
 	culture: en-GB
 	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
 	sourceQueryCulture: en-GB
 	valueFilterBehavior: independent
-	discourageImplicitMeasures
 	dataAccessOptions
 		legacyRedirects
 		returnErrorValuesAsNull
@@ -14,7 +14,7 @@ ref table fct_generation_by_source
 ref table mart_country_energy_profile
 ref table mart_renewable_growth
 ref table mart_energy_transition
-
-ref expression ExportsFolder
+ref table dim_date
 
 ref cultureInfo en-GB
+
