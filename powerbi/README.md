@@ -6,7 +6,7 @@ works with no Snowflake connection and keeps working after the Snowflake trial e
 
 ```
 GEI.pbip
-GEI.SemanticModel/   TMDL model: 7 tables, 8 relationships, 31 measures, one parameter (ExportsFolder)
+GEI.SemanticModel/   TMDL model: 6 tables, 5 relationships, 31 measures, one parameter (ExportsFolder)
 GEI.Report/          PBIR report: 6 pages, 30 visuals, GEI Emerald theme
 ```
 
@@ -19,17 +19,18 @@ GEI.Report/          PBIR report: 6 pages, 30 visuals, GEI Emerald theme
 
 ## Pages
 1. World overview (Ember's own World figures) 2. Country mix 3. Renewable growth and capacity 4. Transition
-leaders 5. Emissions and economy 6. Data notes. Annual-analysis pages have year slicers backed by `dim_date`;
-country mix and transition leaders include geographic maps. Transition leaders remains a fixed 2010-2022 window.
-See `docs/powerbi/report_spec.md` for the question each page answers and `docs/powerbi/model.md` for the model
-rules (never average percentages, never sum countries to get the World, regions only appear on page 1).
+leaders 5. Emissions and economy 6. Data notes. Annual-analysis pages have year slicers bound directly to each
+visual's annual fact table; country mix and transition leaders include geographic maps. Transition leaders remains
+a fixed 2010-2022 window. See `docs/powerbi/report_spec.md` for the question each page answers and
+`docs/powerbi/model.md` for the model rules (never average percentages, never sum countries to get the World,
+regions only appear on page 1).
 
 ## What has and has not been checked
 | Check | Status |
 |---|---|
 | Original report JSON files validate against Microsoft's published JSON schemas | done before this redesign; new map/slicer JSON parses but is not schema-validated |
 | Report format versions match the files this Desktop release wrote itself (`version.json` 2.0.0, page 2.1.0, pages 1.1.0, report 3.3.0 with the Fluent2 theme) | done, after the first open failed with "cannot read visualContainers" because the first version used older format versions |
-| Updated semantic model reloads from the TMDL folder (7 tables, 8 relationships, 31 measures) | done via the Power BI authoring MCP |
+| Updated semantic model reloads from the TMDL folder (6 tables, 5 relationships, 31 measures) | done via the Power BI authoring MCP |
 | All report field bindings refer to a column or measure that exists in the model | done for the original report; new map and date bindings match the updated model |
 | Model and project settings match what Power BI Desktop itself wrote (model version 4.2, compatibility level 1606) | done |
 | **Updated report opened in Power BI Desktop** | **not done** |

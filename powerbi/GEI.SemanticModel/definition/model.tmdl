@@ -14,7 +14,4 @@ ref table fct_generation_by_source
 ref table mart_country_energy_profile
 ref table mart_renewable_growth
 ref table mart_energy_transition
-ref table dim_date
-
 ref cultureInfo en-GB
-

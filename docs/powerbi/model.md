@@ -12,16 +12,12 @@ dim_geography (geography_key) 1 ──< * mart_country_energy_profile (geography
 dim_geography (geography_key) 1 ──< * mart_renewable_growth (geography_key)
 dim_geography (geography_key) 1 ──< * mart_energy_transition (geography_key)
 dim_energy_source (source_key) 1 ──< * fct_generation_by_source (source_key)
-dim_date (Year) 1 ──< * fct_generation_by_source (year)
-dim_date (Year) 1 ──< * mart_country_energy_profile (year)
-dim_date (Year) 1 ──< * mart_renewable_growth (year)
 ```
 
 All relationships single direction (dimension filters fact), no bi-directional filtering.
 
 | Table | Grain | Use |
 |---|---|---|
-| `dim_date` | one row per reporting year; `Date` is January 1 of that year | year slicers for annual generation and country analysis |
 | `dim_geography` | one row per geography (229 countries, 15 regions incl. `REG_WORLD`) | slicers: country, continent; `is_country` filter |
 | `dim_energy_source` | one row per Ember source label | `is_renewable`, `category` |
 | `fct_generation_by_source` | geography x year x source | mix charts, World trend (includes regions) |

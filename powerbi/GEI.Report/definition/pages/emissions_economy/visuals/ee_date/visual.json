@@ -21,14 +21,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_date"
+                      "Entity": "mart_country_energy_profile"
                     }
                   },
-                  "Property": "Year Label"
+                  "Property": "year"
                 }
               },
-              "queryRef": "dim_date.Year Label",
-              "nativeQueryRef": "Year Label"
+              "queryRef": "mart_country_energy_profile.year",
+              "nativeQueryRef": "year"
             }
           ]
         }
@@ -48,7 +48,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Year'"
+                  "Value": "'Year (carbon intensity)'"
                 }
               }
             }

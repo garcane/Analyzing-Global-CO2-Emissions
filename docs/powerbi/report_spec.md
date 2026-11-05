@@ -5,9 +5,9 @@ growth. Every page carries a one-line label: **Descriptive** (levels, shares, gr
 things moved together; no causal claim). 2023 is the recommended latest complete year (2024-2025 are partial and
 estimated); the year slicers expose all available years.
 
-Year slicers on annual-analysis pages use `dim_date[Year Label]`, a calculated annual dimension related to the
-annual facts. Transition leaders is a fixed 2010-2022 comparison window, not annual-grain data. Country mix maps
-renewable share by country; Transition leaders maps renewable-share change in percentage points for that window.
+Year slicers on annual-analysis pages are bound directly to each visual's annual fact table. Transition leaders is
+a fixed 2010-2022 comparison window, not annual-grain data. Country mix maps renewable share by country;
+Transition leaders maps renewable-share change in percentage points for that window.
 
 | Page | Business question(s) | Visuals | Label |
 |---|---|---|---|

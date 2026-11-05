@@ -17,16 +17,3 @@ relationship b98aec74-5080-5a7a-b752-b4ecb7b15c4b
 relationship 7cecbf99-c737-5dc2-92d7-269d2dea8cc7
 	fromColumn: mart_energy_transition.geography_key
 	toColumn: dim_geography.geography_key
-
-relationship fct_generation_by_source_year_dim_date_Year
-	fromColumn: fct_generation_by_source.year
-	toColumn: dim_date.Year
-
-relationship mart_country_energy_profile_year_dim_date_Year
-	fromColumn: mart_country_energy_profile.year
-	toColumn: dim_date.Year
-
-relationship mart_renewable_growth_year_dim_date_Year
-	fromColumn: mart_renewable_growth.year
-	toColumn: dim_date.Year
-
