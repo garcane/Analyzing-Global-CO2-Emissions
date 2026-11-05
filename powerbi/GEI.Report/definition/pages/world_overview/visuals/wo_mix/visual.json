@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "wo_mix",
+  "position": {
+    "x": 20,
+    "y": 400,
+    "z": 3,
+    "height": 300,
+    "width": 1240,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "areaChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_generation_by_source"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "fct_generation_by_source.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_generation_by_source"
+                    }
+                  },
+                  "Property": "World Generation TWh"
+                }
+              },
+              "queryRef": "fct_generation_by_source.World Generation TWh",
+              "nativeQueryRef": "World Generation TWh"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_energy_source"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "dim_energy_source.category",
+              "nativeQueryRef": "category"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'World generation by source category (TWh)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

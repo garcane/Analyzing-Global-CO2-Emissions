@@ -1,0 +1,92 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "cm_coalgas",
+  "position": {
+    "x": 780,
+    "y": 80,
+    "z": 3,
+    "height": 300,
+    "width": 480,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Coal Share"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Coal Share",
+              "nativeQueryRef": "Coal Share"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Gas Share"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Gas Share",
+              "nativeQueryRef": "Gas Share"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Coal and gas share of generation'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

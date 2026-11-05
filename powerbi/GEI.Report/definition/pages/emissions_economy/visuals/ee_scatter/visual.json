@@ -1,0 +1,114 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "ee_scatter",
+  "position": {
+    "x": 290,
+    "y": 110,
+    "z": 2,
+    "height": 290,
+    "width": 970,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "country_name"
+                }
+              },
+              "queryRef": "mart_energy_transition.country_name",
+              "nativeQueryRef": "country_name"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "GDP Growth Pct"
+                }
+              },
+              "queryRef": "mart_energy_transition.GDP Growth Pct",
+              "nativeQueryRef": "GDP Growth Pct"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "CO2 Change Pct"
+                }
+              },
+              "queryRef": "mart_energy_transition.CO2 Change Pct",
+              "nativeQueryRef": "CO2 Change Pct"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "is_economy_co2_decoupled"
+                }
+              },
+              "queryRef": "mart_energy_transition.is_economy_co2_decoupled",
+              "nativeQueryRef": "is_economy_co2_decoupled"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'GDP growth vs national CO2 change, 2010-2022 (%)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+table dim_energy_source
+
+	column source_key
+		dataType: string
+		isHidden
+		sourceColumn: source_key
+		summarizeBy: none
+
+	column source_name
+		dataType: string
+		sourceColumn: source_name
+		summarizeBy: none
+
+	column category
+		dataType: string
+		sourceColumn: category
+		summarizeBy: none
+
+	column is_aggregate
+		dataType: boolean
+		sourceColumn: is_aggregate
+		summarizeBy: none
+
+	column is_renewable
+		dataType: boolean
+		sourceColumn: is_renewable
+		summarizeBy: none
+
+	column is_low_carbon
+		dataType: boolean
+		sourceColumn: is_low_carbon
+		summarizeBy: none
+
+	column is_generation
+		dataType: boolean
+		sourceColumn: is_generation
+		summarizeBy: none
+
+	partition dim_energy_source = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(ExportsFolder & "dim_energy_source.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"source_key", type text}, {"source_name", type text}, {"category", type text}, {"is_aggregate", type logical}, {"is_renewable", type logical}, {"is_low_carbon", type logical}, {"is_generation", type logical}}, "en-US")
+				in
+					Typed

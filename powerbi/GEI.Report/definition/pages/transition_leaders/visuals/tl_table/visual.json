@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "tl_table",
+  "position": {
+    "x": 20,
+    "y": 420,
+    "z": 3,
+    "height": 290,
+    "width": 1240,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "country_name"
+                }
+              },
+              "queryRef": "mart_energy_transition.country_name",
+              "nativeQueryRef": "country_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "renewable_share_change_rank"
+                }
+              },
+              "queryRef": "mart_energy_transition.renewable_share_change_rank",
+              "nativeQueryRef": "renewable_share_change_rank"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "renewables_growth_twh_rank"
+                }
+              },
+              "queryRef": "mart_energy_transition.renewables_growth_twh_rank",
+              "nativeQueryRef": "renewables_growth_twh_rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "Renewable Share Change pp"
+                }
+              },
+              "queryRef": "mart_energy_transition.Renewable Share Change pp",
+              "nativeQueryRef": "Renewable Share Change pp"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "Renewables Change TWh"
+                }
+              },
+              "queryRef": "mart_energy_transition.Renewables Change TWh",
+              "nativeQueryRef": "Renewables Change TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "Total Generation Change TWh"
+                }
+              },
+              "queryRef": "mart_energy_transition.Total Generation Change TWh",
+              "nativeQueryRef": "Total Generation Change TWh"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_energy_transition"
+                    }
+                  },
+                  "Property": "is_eligible"
+                }
+              },
+              "queryRef": "mart_energy_transition.is_eligible",
+              "nativeQueryRef": "is_eligible"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Transition table (click a column header to sort)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

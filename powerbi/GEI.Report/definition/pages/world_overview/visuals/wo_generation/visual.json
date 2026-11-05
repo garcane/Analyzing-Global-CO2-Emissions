@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "wo_generation",
+  "position": {
+    "x": 650,
+    "y": 80,
+    "z": 2,
+    "height": 300,
+    "width": 610,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_generation_by_source"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "fct_generation_by_source.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_generation_by_source"
+                    }
+                  },
+                  "Property": "World Generation TWh"
+                }
+              },
+              "queryRef": "fct_generation_by_source.World Generation TWh",
+              "nativeQueryRef": "World Generation TWh"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'World electricity generation (TWh)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

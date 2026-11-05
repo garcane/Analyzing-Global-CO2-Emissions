@@ -1,0 +1,283 @@
+table mart_country_energy_profile
+
+	measure 'Total Generation TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[total_generation_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Renewables TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[renewables_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Fossil TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[fossil_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Nuclear TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[nuclear_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Solar TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[solar_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Wind TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[wind_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Hydro TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[hydro_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Coal TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[coal_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Gas TWh' =
+			CALCULATE ( SUM ( mart_country_energy_profile[gas_twh] ), mart_country_energy_profile[is_complete_year] = TRUE () )
+		formatString: #,##0.0
+
+	measure 'Renewable Share' =
+			DIVIDE ( [Renewables TWh], [Total Generation TWh] )
+		formatString: 0.0%
+
+	measure 'Fossil Share' =
+			DIVIDE ( [Fossil TWh], [Total Generation TWh] )
+		formatString: 0.0%
+
+	measure 'Coal Share' =
+			DIVIDE ( [Coal TWh], [Total Generation TWh] )
+		formatString: 0.0%
+
+	measure 'Gas Share' =
+			DIVIDE ( [Gas TWh], [Total Generation TWh] )
+		formatString: 0.0%
+
+	measure 'Wind + Solar Share' =
+			DIVIDE ( [Wind TWh] + [Solar TWh], [Total Generation TWh] )
+		formatString: 0.0%
+
+	measure 'Generation per Capita kWh' =
+			DIVIDE ( [Total Generation TWh] * 1000000000, SUM ( mart_country_energy_profile[population] ) )
+		formatString: #,##0
+
+	measure 'Renewables TWh PY' =
+			VAR y = SELECTEDVALUE ( mart_country_energy_profile[year] ) RETURN CALCULATE ( [Renewables TWh], mart_country_energy_profile[year] = y - 1 )
+		formatString: #,##0.0
+
+	measure 'Renewables YoY TWh' =
+			IF ( ISBLANK ( [Renewables TWh PY] ), BLANK (), [Renewables TWh] - [Renewables TWh PY] )
+		formatString: #,##0.0
+
+	measure 'Power Carbon Intensity gCO2e per kWh' =
+			DIVIDE ( SUM ( mart_country_energy_profile[power_emissions_mtco2e] ), CALCULATE ( SUM ( mart_country_energy_profile[total_generation_twh] ), NOT ISBLANK ( mart_country_energy_profile[power_emissions_mtco2e] ) ) ) * 1000
+		formatString: #,##0
+
+	column geography_key
+		dataType: string
+		isHidden
+		sourceColumn: geography_key
+		summarizeBy: none
+
+	column country_name
+		dataType: string
+		sourceColumn: country_name
+		summarizeBy: none
+
+	column continent
+		dataType: string
+		sourceColumn: continent
+		summarizeBy: none
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceColumn: year
+		summarizeBy: none
+
+	column total_generation_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: total_generation_twh
+		summarizeBy: none
+
+	column total_generation_recomputed_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: total_generation_recomputed_twh
+		summarizeBy: none
+
+	column is_complete_year
+		dataType: boolean
+		sourceColumn: is_complete_year
+		summarizeBy: none
+
+	column renewables_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: renewables_twh
+		summarizeBy: none
+
+	column fossil_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: fossil_twh
+		summarizeBy: none
+
+	column nuclear_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: nuclear_twh
+		summarizeBy: none
+
+	column solar_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: solar_twh
+		summarizeBy: none
+
+	column wind_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: wind_twh
+		summarizeBy: none
+
+	column hydro_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: hydro_twh
+		summarizeBy: none
+
+	column bioenergy_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: bioenergy_twh
+		summarizeBy: none
+
+	column coal_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: coal_twh
+		summarizeBy: none
+
+	column gas_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: gas_twh
+		summarizeBy: none
+
+	column demand_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: demand_twh
+		summarizeBy: none
+
+	column net_imports_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: net_imports_twh
+		summarizeBy: none
+
+	column renewables_capacity_gw
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: renewables_capacity_gw
+		summarizeBy: none
+
+	column power_emissions_mtco2e
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: power_emissions_mtco2e
+		summarizeBy: none
+
+	column power_carbon_intensity_gco2e_kwh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: power_carbon_intensity_gco2e_kwh
+		summarizeBy: none
+
+	column population
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: population
+		summarizeBy: none
+
+	column gdp_intl_dollar_2011
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: gdp_intl_dollar_2011
+		summarizeBy: none
+
+	column national_co2_mt
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: national_co2_mt
+		summarizeBy: none
+
+	column national_co2_per_capita_t
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: national_co2_per_capita_t
+		summarizeBy: none
+
+	column primary_energy_twh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: primary_energy_twh
+		summarizeBy: none
+
+	column has_economy_row
+		dataType: boolean
+		sourceColumn: has_economy_row
+		summarizeBy: none
+
+	column renewable_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: renewable_share_pct
+		summarizeBy: none
+
+	column fossil_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: fossil_share_pct
+		summarizeBy: none
+
+	column nuclear_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: nuclear_share_pct
+		summarizeBy: none
+
+	column wind_solar_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: wind_solar_share_pct
+		summarizeBy: none
+
+	column coal_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: coal_share_pct
+		summarizeBy: none
+
+	column gas_share_pct
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: gas_share_pct
+		summarizeBy: none
+
+	column generation_per_capita_kwh
+		dataType: double
+		formatString: #,##0.00
+		sourceColumn: generation_per_capita_kwh
+		summarizeBy: none
+
+	partition mart_country_energy_profile = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(ExportsFolder & "mart_country_energy_profile.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"country_name", type text}, {"continent", type text}, {"year", Int64.Type}, {"total_generation_twh", type number}, {"total_generation_recomputed_twh", type number}, {"is_complete_year", type logical}, {"renewables_twh", type number}, {"fossil_twh", type number}, {"nuclear_twh", type number}, {"solar_twh", type number}, {"wind_twh", type number}, {"hydro_twh", type number}, {"bioenergy_twh", type number}, {"coal_twh", type number}, {"gas_twh", type number}, {"demand_twh", type number}, {"net_imports_twh", type number}, {"renewables_capacity_gw", type number}, {"power_emissions_mtco2e", type number}, {"power_carbon_intensity_gco2e_kwh", type number}, {"population", type number}, {"gdp_intl_dollar_2011", type number}, {"national_co2_mt", type number}, {"national_co2_per_capita_t", type number}, {"primary_energy_twh", type number}, {"has_economy_row", type logical}, {"renewable_share_pct", type number}, {"fossil_share_pct", type number}, {"nuclear_share_pct", type number}, {"wind_solar_share_pct", type number}, {"coal_share_pct", type number}, {"gas_share_pct", type number}, {"generation_per_capita_kwh", type number}}, "en-US")
+				in
+					Typed

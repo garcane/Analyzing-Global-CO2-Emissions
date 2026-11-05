@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "rg_cf",
+  "position": {
+    "x": 780,
+    "y": 80,
+    "z": 4,
+    "height": 300,
+    "width": 480,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_renewable_growth.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "Capacity Factor"
+                }
+              },
+              "queryRef": "mart_renewable_growth.Capacity Factor",
+              "nativeQueryRef": "Capacity Factor"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "series"
+                }
+              },
+              "queryRef": "mart_renewable_growth.series",
+              "nativeQueryRef": "series"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Capacity factor (generation vs nameplate capacity)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

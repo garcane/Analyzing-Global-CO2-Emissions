@@ -1,0 +1,92 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "cm_shares",
+  "position": {
+    "x": 290,
+    "y": 80,
+    "z": 2,
+    "height": 300,
+    "width": 480,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Renewable Share"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Renewable Share",
+              "nativeQueryRef": "Renewable Share"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Fossil Share"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Fossil Share",
+              "nativeQueryRef": "Fossil Share"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Renewable vs fossil share of generation'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

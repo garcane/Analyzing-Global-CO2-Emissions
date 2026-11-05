@@ -1,0 +1,148 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "cm_mix",
+  "position": {
+    "x": 290,
+    "y": 400,
+    "z": 4,
+    "height": 300,
+    "width": 970,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "stackedColumnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.year",
+              "nativeQueryRef": "year"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Solar TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Solar TWh",
+              "nativeQueryRef": "Solar TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Wind TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Wind TWh",
+              "nativeQueryRef": "Wind TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Hydro TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Hydro TWh",
+              "nativeQueryRef": "Hydro TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Nuclear TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Nuclear TWh",
+              "nativeQueryRef": "Nuclear TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Coal TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Coal TWh",
+              "nativeQueryRef": "Coal TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Gas TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Gas TWh",
+              "nativeQueryRef": "Gas TWh"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Generation by source (TWh)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

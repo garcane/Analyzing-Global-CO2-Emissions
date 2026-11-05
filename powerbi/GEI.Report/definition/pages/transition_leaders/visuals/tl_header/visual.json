@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "tl_header",
+  "position": {
+    "x": 20,
+    "y": 10,
+    "z": 0,
+    "height": 90,
+    "width": 1240,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Transition leaders, 2010 to 2022"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Descriptive. A share can rise because total generation FELL. Rank by absolute renewable growth (TWh) as well as by share change."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Eligible = both years reconcile to Ember's totals and the country generated at least 1 TWh in 2010."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

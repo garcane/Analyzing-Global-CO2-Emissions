@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "rg_table",
+  "position": {
+    "x": 290,
+    "y": 400,
+    "z": 5,
+    "height": 300,
+    "width": 970,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_geography"
+                    }
+                  },
+                  "Property": "geography_name"
+                }
+              },
+              "queryRef": "dim_geography.geography_name",
+              "nativeQueryRef": "geography_name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Renewables TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Renewables TWh",
+              "nativeQueryRef": "Renewables TWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Renewables YoY TWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Renewables YoY TWh",
+              "nativeQueryRef": "Renewables YoY TWh"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Renewable generation and year-on-year change (select a year)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
