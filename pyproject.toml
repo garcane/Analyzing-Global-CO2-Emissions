@@ -22,6 +22,7 @@ dev = [
     "ipykernel",
     "matplotlib",
     "seaborn",
+    "jsonschema>=4.26.0",
 ]
 
 [tool.ruff]
