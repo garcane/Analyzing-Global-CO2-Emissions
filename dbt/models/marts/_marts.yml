@@ -144,7 +144,11 @@ models:
               arguments:
                 values: ['solar', 'wind', 'hydro', 'renewables']
       - name: capacity_factor
-        description: Generation / (nameplate capacity x hours). Values above 1 indicate a capacity-data issue.
+        description: >
+          Generation / (nameplate capacity x hours). Values above 1 indicate a capacity-data issue: on
+          2026-11-05 all 16 such rows have capacity of 0.11 GW or less (e.g. Kuwait wind 0.01 GW producing
+          1.8 TWh), i.e. Ember capacity placeholders/rounding, not real capacity factors. Do not chart
+          capacity factor for tiny capacities.
         tests:
           - accepted_range:
               arguments: {min_value: 0, max_value: 1.5}
@@ -162,3 +166,9 @@ models:
       - name: is_eligible
         description: Both endpoint years reconcile and start-year generation >= transition_min_generation_twh.
         tests: [not_null]
+      - name: renewable_share_change_pp
+        description: >
+          Percentage-point change in renewable share of generation. Can rise because total generation fell
+          (compare total_generation_change_twh and renewables_change_twh) and is volatile for small grids.
+      - name: renewables_change_twh
+        description: Absolute change in renewable generation (TWh) over the window; use beside the share change.

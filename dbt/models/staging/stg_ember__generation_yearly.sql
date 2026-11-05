@@ -8,7 +8,8 @@ select
     electricity_source,
     try_to_boolean(is_aggregated_source)                    as is_aggregated_source,
     try_to_decimal(generation_twh, 18, 6)                   as generation_twh,
-    try_to_decimal(share_of_generation_pct, 18, 6)          as share_of_generation_pct,
+    -- RAW name has no "_pct": the loader's column rule drops the "%" from "Share of generation (%)".
+    try_to_decimal(share_of_generation, 18, 6)              as share_of_generation_pct,
     try_to_decimal(capacity_gw, 18, 6)                      as capacity_gw,
     try_to_decimal(emissions_mtco2e, 18, 6)                 as emissions_mtco2e,
     try_to_decimal(emissions_intensity_gco2e_kwh, 18, 6)    as emissions_intensity_gco2e_kwh,

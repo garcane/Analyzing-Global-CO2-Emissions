@@ -10,7 +10,7 @@ OWID CO₂ (CSV) ────┼─> Python ingestion ─> Snowflake RAW ─> db
 ISO reference ─────┘
 ```
 
-**Status:** Phase 1 (scope, reference data, environment) done. Phase 2 done: the Ember CSV, Ember API and OWID CO₂ data are loaded into Snowflake `RAW` and reconciled (see [docs/snowflake_setup.md](docs/snowflake_setup.md)). dbt models, CI and the dashboard are not built yet.
+**Status:** Phase 1 (scope, reference data, environment) done. Phase 2 done: the Ember CSV, Ember API and OWID CO₂ data are loaded into Snowflake `GEI_RAW` and reconciled (see [docs/snowflake_setup.md](docs/snowflake_setup.md)). Phase 3 done: the dbt project builds 13 models and passes 70 of 71 tests (one warning: 16 implausible capacity factors caused by Ember capacity placeholders). CI automation and the Power BI dashboard are not built yet.
 
 ## Data
 

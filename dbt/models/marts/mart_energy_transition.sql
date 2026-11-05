@@ -20,6 +20,10 @@ changes as (
         s.renewable_share_pct                                    as start_renewable_share_pct,
         e.renewable_share_pct                                    as end_renewable_share_pct,
         e.renewable_share_pct - s.renewable_share_pct            as renewable_share_change_pp,
+        -- Read the share change together with these: a share can rise because fossil generation FELL
+        -- (e.g. a collapsing grid), not because renewables grew.
+        e.total_generation_twh - s.total_generation_twh          as total_generation_change_twh,
+        e.renewables_twh - s.renewables_twh                      as renewables_change_twh,
         e.fossil_share_pct - s.fossil_share_pct                  as fossil_share_change_pp,
         e.coal_share_pct - s.coal_share_pct                      as coal_share_change_pp,
         e.gas_share_pct - s.gas_share_pct                        as gas_share_change_pp,
