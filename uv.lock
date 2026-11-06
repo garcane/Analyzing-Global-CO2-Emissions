@@ -531,6 +531,7 @@ dev = [
     { name = "jsonschema" },
     { name = "matplotlib" },
     { name = "pytest" },
+    { name = "pyyaml" },
     { name = "ruff" },
     { name = "seaborn" },
 ]
@@ -553,6 +554,7 @@ dev = [
     { name = "jsonschema", specifier = ">=4.26.0" },
     { name = "matplotlib" },
     { name = "pytest" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "ruff" },
     { name = "seaborn" },
 ]

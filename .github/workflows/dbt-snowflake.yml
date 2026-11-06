@@ -58,7 +58,10 @@ jobs:
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           DBT_SNOWFLAKE_USER: ${{ secrets.CI_SNOWFLAKE_USER }}
-        run: uv run python dbt/run_dbt.py run-operation drop_ci_schemas --args "{suffix: ci_${{ github.run_id }}}"
+        # Block scalar on purpose: an unquoted "{suffix: ...}" inside a one-line YAML value is invalid YAML.
+        # DBT_DEV_SUFFIX (ci_<run id>) is set at job level above.
+        run: |
+          uv run python dbt/run_dbt.py run-operation drop_ci_schemas --args "{suffix: $DBT_DEV_SUFFIX}"
 
       - name: Remove the private key file (always)
         if: always()

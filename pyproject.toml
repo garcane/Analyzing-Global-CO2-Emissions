@@ -23,6 +23,7 @@ dev = [
     "matplotlib",
     "seaborn",
     "jsonschema>=4.26.0",
+    "pyyaml>=6.0.3",
 ]
 
 [tool.ruff]
