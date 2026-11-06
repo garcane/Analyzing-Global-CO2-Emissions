@@ -35,29 +35,56 @@ jobs:
       - name: Install locked dependencies
         run: uv sync --frozen
 
-      - name: Write the CI private key (from a secret) to a temporary file
+      - name: Prepare the credentials from the secrets
         env:
           CI_KEY: ${{ secrets.CI_SNOWFLAKE_PRIVATE_KEY }}
+          RAW_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          RAW_USER: ${{ secrets.CI_SNOWFLAKE_USER }}
         run: |
           umask 077
           printf '%s\n' "$CI_KEY" > "$RUNNER_TEMP/ci_key.p8"
-          # Later steps (dbt reads this) and the cleanup step use the same path.
-          echo "DBT_SNOWFLAKE_PRIVATE_KEY_PATH=$RUNNER_TEMP/ci_key.p8" >> "$GITHUB_ENV"
+          # An account identifier or user name never contains whitespace, but a pasted secret often ends with a
+          # space or newline, and Snowflake then answers "JWT token is invalid". Strip it, and say so.
+          # (Stripping all whitespace also makes the GITHUB_ENV lines below safe from newline injection.)
+          account="$(printf '%s' "$RAW_ACCOUNT" | tr -d '[:space:]')"
+          user="$(printf '%s' "$RAW_USER" | tr -d '[:space:]')"
+          if [ "${#account}" -ne "${#RAW_ACCOUNT}" ]; then echo "note: the SNOWFLAKE_ACCOUNT secret had $(( ${#RAW_ACCOUNT} - ${#account} )) stray whitespace character(s); removed"; fi
+          if [ "${#user}" -ne "${#RAW_USER}" ]; then echo "note: the CI_SNOWFLAKE_USER secret had $(( ${#RAW_USER} - ${#user} )) stray whitespace character(s); removed"; fi
+          {
+            echo "SNOWFLAKE_ACCOUNT=$account"
+            echo "DBT_SNOWFLAKE_USER=$user"
+            echo "DBT_SNOWFLAKE_PRIVATE_KEY_PATH=$RUNNER_TEMP/ci_key.p8"
+          } >> "$GITHUB_ENV"
+
+      # Explains a "JWT token is invalid" login failure without exposing any secret: it prints whether each
+      # secret equals the expected non-secret value, the shape of the key file, and the PUBLIC key
+      # fingerprint to compare with `DESC USER GEI_CI_SVC` (RSA_PUBLIC_KEY_FP) in Snowflake.
+      - name: Pre-flight check of the credentials (prints no secret)
+        env:
+          EXPECTED_ACCOUNT: GWEPWIG-CA86069
+          EXPECTED_USER: GEI_CI_SVC
+        run: |
+          f="$DBT_SNOWFLAKE_PRIVATE_KEY_PATH"; ok=1
+          if [ "$SNOWFLAKE_ACCOUNT" = "$EXPECTED_ACCOUNT" ]; then echo "account: equals the expected value"; else echo "account: DIFFERS from the expected value (length ${#SNOWFLAKE_ACCOUNT}, expected ${#EXPECTED_ACCOUNT})"; ok=0; fi
+          if [ "$DBT_SNOWFLAKE_USER" = "$EXPECTED_USER" ]; then echo "user: equals the expected value"; else echo "user: DIFFERS from the expected value (length ${#DBT_SNOWFLAKE_USER}, expected ${#EXPECTED_USER})"; ok=0; fi
+          echo "key file: $(wc -l < "$f") lines, carriage returns: $(tr -cd '\r' < "$f" | wc -c)"
+          if fp=$(openssl pkey -in "$f" -pubout -outform DER 2>/dev/null | openssl dgst -sha256 -binary | openssl base64) && [ -n "$fp" ]; then
+            echo "public key fingerprint: SHA256:$fp"
+          else
+            echo "key file is NOT a readable private key (empty, truncated or wrong format)"; ok=0
+          fi
+          if [ "$ok" != 1 ]; then echo "pre-flight failed: fix the secret(s) named above, then run again"; exit 1; fi
 
       - name: dbt seed, build and freshness
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_USER: ${{ secrets.CI_SNOWFLAKE_USER }}
+        id: dbt
         run: |
           uv run python dbt/run_dbt.py debug
           uv run python dbt/run_dbt.py build
           uv run python dbt/run_dbt.py source freshness
 
+      # Runs even if the build failed (so nothing is left behind), but not if the build never started.
       - name: Drop the throwaway CI schemas (always)
-        if: always()
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          DBT_SNOWFLAKE_USER: ${{ secrets.CI_SNOWFLAKE_USER }}
+        if: ${{ always() && steps.dbt.outcome != 'skipped' }}
         # Block scalar on purpose: an unquoted "{suffix: ...}" inside a one-line YAML value is invalid YAML.
         # DBT_DEV_SUFFIX (ci_<run id>) is set at job level above.
         run: |
