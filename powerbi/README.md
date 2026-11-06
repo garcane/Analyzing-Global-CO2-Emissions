@@ -33,9 +33,9 @@ regions only appear on page 1).
 | Updated semantic model reloads from the TMDL folder (6 tables, 5 relationships, 31 measures) | done via the Power BI authoring MCP |
 | All report field bindings refer to a column or measure that exists in the model | done for the original report; new map and date bindings match the updated model |
 | Model and project settings match what Power BI Desktop itself wrote (model version 4.2, compatibility level 1606) | done |
-| **Updated report opened in Power BI Desktop** | **not done** |
-| Visual type names (`lineChart`, `areaChart`, `stackedColumnChart`, `scatterChart`, `tableEx`, `slicer`, `textbox`, `filledMap`) and their role names (including `Location` and `Color saturation`) | **unverified** until Desktop opens the report |
-| Text-box paragraph JSON and the TMDL/M text (parameter, CSV partitions, measure expressions) | **unverified** until Desktop loads them |
+| Updated report opens in Power BI Desktop | done: confirmed by the project owner on 2026-11-06 (it opens) |
+| Visual type names (`lineChart`, `areaChart`, `stackedColumnChart`, `scatterChart`, `tableEx`, `slicer`, `textbox`, `filledMap`) and their role names (including `Location` and `Color saturation`) | the report opens; whether **each visual renders as intended has not been reviewed** |
+| Text-box paragraph JSON and the TMDL/M text (parameter, CSV partitions, measure expressions) | done for the model: Desktop loads it (its diagnostics listed all tables and the parameter); the report opens |
 | DAX measures return the expected numbers | **unverified**: compare with the table in `docs/powerbi/report_spec.md` |
 
 If Desktop reports an error when opening, it names the file. The most likely culprits are individual
