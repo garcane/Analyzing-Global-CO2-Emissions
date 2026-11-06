@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "dn_notes",
+  "position": {
+    "x": 20,
+    "y": 10,
+    "z": 0,
+    "height": 700,
+    "width": 1240,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Data notes and limitations"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Electricity data: Ember yearly electricity data (CC-BY-4.0). Emissions, population and GDP: Our World in Data CO2 dataset (CC BY)."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "2024 covers 194 countries and 2025 only 94. Ember's latest years are estimates and are not flagged per value."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "A missing source row means zero generation for that source (checked: the sources still add up to Ember's published total)."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Shares are shares of GENERATION, not consumption; a net importer's consumption mix differs."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Power-sector emissions (Ember) are lifecycle figures; national CO2 (OWID) is territorial combustion and industry. They are not comparable."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Capacity is nameplate; capacity factors for capacities under 0.15 GW are hidden because Ember reports placeholder values there."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "GDP (OWID, 2011 international dollars) ends in 2022, so the transition window is 2010-2022."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Ranking countries by share-of-generation gain rewards grids whose total generation fell; use the absolute TWh columns beside it."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Decoupled = GDP up and CO2 down over the window: an association, not evidence of cause."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Country slicers also list regions (World, EU, ...). Regions only have data on the World overview page."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

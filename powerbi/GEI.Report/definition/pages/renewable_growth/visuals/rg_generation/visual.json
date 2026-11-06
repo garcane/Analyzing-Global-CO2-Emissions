@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "rg_generation",
+  "position": {
+    "x": 290,
+    "y": 80,
+    "z": 3000,
+    "height": 300,
+    "width": 480,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_renewable_growth.year",
+              "nativeQueryRef": "year",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "series"
+                }
+              },
+              "queryRef": "mart_renewable_growth.series",
+              "nativeQueryRef": "series"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_renewable_growth"
+                    }
+                  },
+                  "Property": "Generation TWh"
+                }
+              },
+              "queryRef": "mart_renewable_growth.Generation TWh",
+              "nativeQueryRef": "Generation TWh"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Generation (TWh) by renewable series'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

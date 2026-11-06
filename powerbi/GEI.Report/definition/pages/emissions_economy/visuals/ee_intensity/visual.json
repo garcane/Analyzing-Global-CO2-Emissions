@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ee_intensity",
+  "position": {
+    "x": 290,
+    "y": 420,
+    "z": 4000,
+    "height": 280,
+    "width": 480,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.year",
+              "nativeQueryRef": "year",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "mart_country_energy_profile"
+                    }
+                  },
+                  "Property": "Power Carbon Intensity gCO2e per kWh"
+                }
+              },
+              "queryRef": "mart_country_energy_profile.Power Carbon Intensity gCO2e per kWh",
+              "nativeQueryRef": "Power Carbon Intensity gCO2e per kWh"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Power-sector carbon intensity (gCO2e per kWh, lifecycle)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

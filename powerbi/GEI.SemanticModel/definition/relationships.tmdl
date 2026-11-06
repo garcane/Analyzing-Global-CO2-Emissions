@@ -1,0 +1,20 @@
+relationship 9aadf59d-a447-5a62-910c-d4d33220c0fe
+	fromColumn: fct_generation_by_source.geography_key
+	toColumn: dim_geography.geography_key
+
+relationship b78ad751-fdaf-52e2-9de4-7d7e8a9f7b35
+	fromColumn: fct_generation_by_source.source_key
+	toColumn: dim_energy_source.source_key
+
+relationship e4adfc70-f571-5a9a-b1d6-2aba7bbf1919
+	fromColumn: mart_country_energy_profile.geography_key
+	toColumn: dim_geography.geography_key
+
+relationship b98aec74-5080-5a7a-b752-b4ecb7b15c4b
+	fromColumn: mart_renewable_growth.geography_key
+	toColumn: dim_geography.geography_key
+
+relationship 7cecbf99-c737-5dc2-92d7-269d2dea8cc7
+	fromColumn: mart_energy_transition.geography_key
+	toColumn: dim_geography.geography_key
+

@@ -1,0 +1,192 @@
+table mart_energy_transition
+	lineageTag: 595e0838-d841-40f2-8917-d89d10e08095
+
+	measure 'Renewable Share Change pp' = SUM ( mart_energy_transition[renewable_share_change_pp] )
+		formatString: 0.0
+		lineageTag: 02582e81-b78b-40ec-8e5b-5cbbfd9a7d4f
+
+	measure 'Renewables Change TWh' = SUM ( mart_energy_transition[renewables_change_twh] )
+		formatString: #,##0.0
+		lineageTag: c1c89374-8920-40f0-8d8a-5f988d164ee3
+
+	measure 'Total Generation Change TWh' = SUM ( mart_energy_transition[total_generation_change_twh] )
+		formatString: #,##0.0
+		lineageTag: 70c88af9-abff-4507-849f-7687de1b35db
+
+	measure 'GDP Growth Pct' = SUM ( mart_energy_transition[gdp_growth_pct] )
+		formatString: 0.0
+		lineageTag: db4ee87a-e92e-44fb-a62c-914a3cb0a9a3
+
+	measure 'CO2 Change Pct' = SUM ( mart_energy_transition[national_co2_change_pct] )
+		formatString: 0.0
+		lineageTag: e030d712-9656-4a79-8786-6bbbdfc9665c
+
+	measure 'Eligible Countries' = CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE () )
+		formatString: 0
+		lineageTag: 50ca2dba-fe16-4fa7-bb25-5b85ab6e834e
+
+	measure 'Decoupled Countries' = CALCULATE ( COUNTROWS ( mart_energy_transition ), mart_energy_transition[is_eligible] = TRUE (), mart_energy_transition[is_economy_co2_decoupled] = TRUE () )
+		formatString: 0
+		lineageTag: 59501dc4-921d-4968-ba5c-183ea03cc9bb
+
+	column geography_key
+		dataType: string
+		isHidden
+		lineageTag: b3c0f74b-3d19-4ed2-8831-8a2328515185
+		summarizeBy: none
+		sourceColumn: geography_key
+
+	column country_name
+		dataType: string
+		lineageTag: d1dfa7ca-126a-4cb7-920f-8c92b7b09a43
+		dataCategory: CountryRegion
+		summarizeBy: none
+		sourceColumn: country_name
+
+	column continent
+		dataType: string
+		lineageTag: 1f3e0848-4cdb-46a2-af11-4894db5665e0
+		summarizeBy: none
+		sourceColumn: continent
+
+	column start_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 374fe5fa-aee2-458f-bc18-42bd6d7d4b68
+		summarizeBy: none
+		sourceColumn: start_year
+
+	column end_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 680421ec-e876-4693-959e-e462fb835249
+		summarizeBy: none
+		sourceColumn: end_year
+
+	column start_generation_twh
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b9993966-63f9-4d34-aef7-0d2a43ccf053
+		summarizeBy: none
+		sourceColumn: start_generation_twh
+
+	column end_generation_twh
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 01495549-2b18-4e55-a988-8ab8df321871
+		summarizeBy: none
+		sourceColumn: end_generation_twh
+
+	column start_renewable_share_pct
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b36b3716-11aa-4b35-984d-c161c6a865bc
+		summarizeBy: none
+		sourceColumn: start_renewable_share_pct
+
+	column end_renewable_share_pct
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: be36c221-b5b4-4b6e-bf1c-e418c40bfd36
+		summarizeBy: none
+		sourceColumn: end_renewable_share_pct
+
+	column renewable_share_change_pp
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 140ceff7-de3f-42cd-96ef-a99d141ecfc7
+		summarizeBy: none
+		sourceColumn: renewable_share_change_pp
+
+	column total_generation_change_twh
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2bfd8d9a-23a2-420c-aade-b28c0959d213
+		summarizeBy: none
+		sourceColumn: total_generation_change_twh
+
+	column renewables_change_twh
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: d995df29-b772-4a34-b7c4-a0ebf6257a64
+		summarizeBy: none
+		sourceColumn: renewables_change_twh
+
+	column fossil_share_change_pp
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 325a2b8f-aa5d-4275-b1c7-d1f421c7bb1c
+		summarizeBy: none
+		sourceColumn: fossil_share_change_pp
+
+	column coal_share_change_pp
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 473a0060-3501-4098-9abf-96b464aea219
+		summarizeBy: none
+		sourceColumn: coal_share_change_pp
+
+	column gas_share_change_pp
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 66b46d54-b887-4d32-8d4f-e6b49d6a8021
+		summarizeBy: none
+		sourceColumn: gas_share_change_pp
+
+	column carbon_intensity_change_gco2e_kwh
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: ff013757-1e3c-4a25-90ea-e1e1ddbda636
+		summarizeBy: none
+		sourceColumn: carbon_intensity_change_gco2e_kwh
+
+	column gdp_growth_pct
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 37646794-0b73-45e4-bcca-658f84cba229
+		summarizeBy: none
+		sourceColumn: gdp_growth_pct
+
+	column national_co2_change_pct
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 206ab4dc-432a-4754-8ef1-751c8bbadc82
+		summarizeBy: none
+		sourceColumn: national_co2_change_pct
+
+	column is_economy_co2_decoupled
+		dataType: boolean
+		lineageTag: 9fa5929e-ae35-4f38-93f6-338b5b8a3618
+		summarizeBy: none
+		sourceColumn: is_economy_co2_decoupled
+
+	column is_eligible
+		dataType: boolean
+		lineageTag: 4ef3b8e1-1fa3-41a1-ba82-02dc50303487
+		summarizeBy: none
+		sourceColumn: is_eligible
+
+	column renewable_share_change_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: ab52d603-fe48-456b-9849-3a9724186b65
+		summarizeBy: none
+		sourceColumn: renewable_share_change_rank
+
+	column renewables_growth_twh_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: e45838b9-b46e-494e-86b3-85b08bd232d5
+		summarizeBy: none
+		sourceColumn: renewables_growth_twh_rank
+
+	partition mart_energy_transition = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(ExportsFolder & "mart_energy_transition.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"geography_key", type text}, {"country_name", type text}, {"continent", type text}, {"start_year", Int64.Type}, {"end_year", Int64.Type}, {"start_generation_twh", type number}, {"end_generation_twh", type number}, {"start_renewable_share_pct", type number}, {"end_renewable_share_pct", type number}, {"renewable_share_change_pp", type number}, {"total_generation_change_twh", type number}, {"renewables_change_twh", type number}, {"fossil_share_change_pp", type number}, {"coal_share_change_pp", type number}, {"gas_share_change_pp", type number}, {"carbon_intensity_change_gco2e_kwh", type number}, {"gdp_growth_pct", type number}, {"national_co2_change_pct", type number}, {"is_economy_co2_decoupled", type logical}, {"is_eligible", type logical}, {"renewable_share_change_rank", Int64.Type}, {"renewables_growth_twh_rank", Int64.Type}}, "en-US")
+				in
+					Typed
+

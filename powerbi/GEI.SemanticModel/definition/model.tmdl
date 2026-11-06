@@ -1,0 +1,23 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_geography","dim_energy_source","fct_generation_by_source","mart_country_energy_profile","mart_renewable_growth","mart_energy_transition","ExportsFolder"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_geography
+ref table dim_energy_source
+ref table fct_generation_by_source
+ref table mart_country_energy_profile
+ref table mart_renewable_growth
+ref table mart_energy_transition
+
+ref cultureInfo en-GB
+

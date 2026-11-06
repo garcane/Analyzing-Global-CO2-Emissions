@@ -1,0 +1,56 @@
+table dim_energy_source
+	lineageTag: 8b60e008-b55a-496c-a493-cf1109b91701
+
+	column source_key
+		dataType: string
+		isHidden
+		lineageTag: 8ddd9075-d0db-495e-95e4-71c8b8b260c9
+		summarizeBy: none
+		sourceColumn: source_key
+
+	column source_name
+		dataType: string
+		lineageTag: be05beed-78bb-427e-947f-62b9fe9abc4e
+		summarizeBy: none
+		sourceColumn: source_name
+
+	column category
+		dataType: string
+		lineageTag: 91557ba4-fba7-4acc-a93d-7f943742c5e3
+		summarizeBy: none
+		sourceColumn: category
+
+	column is_aggregate
+		dataType: boolean
+		lineageTag: c71445f8-9711-43ac-86b4-cfbd2e0f01c7
+		summarizeBy: none
+		sourceColumn: is_aggregate
+
+	column is_renewable
+		dataType: boolean
+		lineageTag: 793e8102-6884-40ef-94fd-b0d739320ce1
+		summarizeBy: none
+		sourceColumn: is_renewable
+
+	column is_low_carbon
+		dataType: boolean
+		lineageTag: f8da680c-f571-4822-8f82-df16680df193
+		summarizeBy: none
+		sourceColumn: is_low_carbon
+
+	column is_generation
+		dataType: boolean
+		lineageTag: aa64a1d6-0a0b-4014-9c0a-97c2bb889059
+		summarizeBy: none
+		sourceColumn: is_generation
+
+	partition dim_energy_source = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(ExportsFolder & "dim_energy_source.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"source_key", type text}, {"source_name", type text}, {"category", type text}, {"is_aggregate", type logical}, {"is_renewable", type logical}, {"is_low_carbon", type logical}, {"is_generation", type logical}}, "en-US")
+				in
+					Typed
+

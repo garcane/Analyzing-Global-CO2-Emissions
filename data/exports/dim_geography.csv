@@ -1,0 +1,245 @@
+geography_key,geography_name,entity_type,continent,is_country
+ABW,Aruba,country,South America,true
+AFG,Afghanistan,country,Asia,true
+AGO,Angola,country,Africa,true
+AIA,Anguilla,country,North America,true
+ALB,Albania,country,Europe,true
+AND,Andorra,country,Europe,true
+ARE,United Arab Emirates,country,Asia,true
+ARG,Argentina,country,South America,true
+ARM,Armenia,country,Asia,true
+ASM,American Samoa,country,Oceania,true
+ATA,Antarctica,country,Antarctica,true
+ATG,Antigua and Barbuda,country,North America,true
+AUS,Australia,country,Oceania,true
+AUT,Austria,country,Europe,true
+AZE,Azerbaijan,country,Asia,true
+BDI,Burundi,country,Africa,true
+BEL,Belgium,country,Europe,true
+BEN,Benin,country,Africa,true
+BES,Bonaire Sint Eustatius and Saba,country,North America,true
+BFA,Burkina Faso,country,Africa,true
+BGD,Bangladesh,country,Asia,true
+BGR,Bulgaria,country,Europe,true
+BHR,Bahrain,country,Asia,true
+BHS,Bahamas,country,North America,true
+BIH,Bosnia and Herzegovina,country,Europe,true
+BLR,Belarus,country,Europe,true
+BLZ,Belize,country,North America,true
+BMU,Bermuda,country,North America,true
+BOL,Bolivia,country,South America,true
+BRA,Brazil,country,South America,true
+BRB,Barbados,country,North America,true
+BRN,Brunei,country,Asia,true
+BTN,Bhutan,country,Asia,true
+BWA,Botswana,country,Africa,true
+CAF,Central African Republic,country,Africa,true
+CAN,Canada,country,North America,true
+CHE,Switzerland,country,Europe,true
+CHL,Chile,country,South America,true
+CHN,China,country,Asia,true
+CIV,Cote d'Ivoire,country,Africa,true
+CMR,Cameroon,country,Africa,true
+COD,Democratic Republic of Congo,country,Africa,true
+COG,Congo,country,Africa,true
+COK,Cook Islands,country,Oceania,true
+COL,Colombia,country,South America,true
+COM,Comoros,country,Africa,true
+CPV,Cape Verde,country,Africa,true
+CRI,Costa Rica,country,North America,true
+CUB,Cuba,country,North America,true
+CUW,Curacao,country,North America,true
+CXR,Christmas Island,country,Oceania,true
+CYM,Cayman Islands,country,North America,true
+CYP,Cyprus,country,Europe,true
+CZE,Czechia,country,Europe,true
+DEU,Germany,country,Europe,true
+DJI,Djibouti,country,Africa,true
+DMA,Dominica,country,North America,true
+DNK,Denmark,country,Europe,true
+DOM,Dominican Republic,country,North America,true
+DZA,Algeria,country,Africa,true
+ECU,Ecuador,country,South America,true
+EGY,Egypt,country,Africa,true
+ERI,Eritrea,country,Africa,true
+ESP,Spain,country,Europe,true
+EST,Estonia,country,Europe,true
+ETH,Ethiopia,country,Africa,true
+FIN,Finland,country,Europe,true
+FJI,Fiji,country,Oceania,true
+FLK,Falkland Islands (Malvinas),country,South America,true
+FRA,France,country,Europe,true
+FRO,Faroe Islands,country,Europe,true
+FSM,Micronesia (country),country,Oceania,true
+GAB,Gabon,country,Africa,true
+GBR,United Kingdom,country,Europe,true
+GEO,Georgia,country,Asia,true
+GHA,Ghana,country,Africa,true
+GIN,Guinea,country,Africa,true
+GLP,Guadeloupe,country,North America,true
+GMB,Gambia,country,Africa,true
+GNB,Guinea-Bissau,country,Africa,true
+GNQ,Equatorial Guinea,country,Africa,true
+GRC,Greece,country,Europe,true
+GRD,Grenada,country,North America,true
+GRL,Greenland,country,North America,true
+GTM,Guatemala,country,North America,true
+GUF,French Guiana,country,South America,true
+GUM,Guam,country,Oceania,true
+GUY,Guyana,country,South America,true
+HKG,Hong Kong,country,Asia,true
+HND,Honduras,country,North America,true
+HRV,Croatia,country,Europe,true
+HTI,Haiti,country,North America,true
+HUN,Hungary,country,Europe,true
+IDN,Indonesia,country,Asia,true
+IND,India,country,Asia,true
+IRL,Ireland,country,Europe,true
+IRN,Iran,country,Asia,true
+IRQ,Iraq,country,Asia,true
+ISL,Iceland,country,Europe,true
+ISR,Israel,country,Asia,true
+ITA,Italy,country,Europe,true
+JAM,Jamaica,country,North America,true
+JOR,Jordan,country,Asia,true
+JPN,Japan,country,Asia,true
+KAZ,Kazakhstan,country,Asia,true
+KEN,Kenya,country,Africa,true
+KGZ,Kyrgyzstan,country,Asia,true
+KHM,Cambodia,country,Asia,true
+KIR,Kiribati,country,Oceania,true
+KNA,Saint Kitts and Nevis,country,North America,true
+KOR,South Korea,country,Asia,true
+KWT,Kuwait,country,Asia,true
+LAO,Laos,country,Asia,true
+LBN,Lebanon,country,Asia,true
+LBR,Liberia,country,Africa,true
+LBY,Libya,country,Africa,true
+LCA,Saint Lucia,country,North America,true
+LIE,Liechtenstein,country,Europe,true
+LKA,Sri Lanka,country,Asia,true
+LSO,Lesotho,country,Africa,true
+LTU,Lithuania,country,Europe,true
+LUX,Luxembourg,country,Europe,true
+LVA,Latvia,country,Europe,true
+MAC,Macao,country,Asia,true
+MAR,Morocco,country,Africa,true
+MCO,Monaco,country,Europe,true
+MDA,Moldova,country,Europe,true
+MDG,Madagascar,country,Africa,true
+MDV,Maldives,country,Asia,true
+MEX,Mexico,country,North America,true
+MHL,Marshall Islands,country,Oceania,true
+MKD,North Macedonia,country,Europe,true
+MLI,Mali,country,Africa,true
+MLT,Malta,country,Europe,true
+MMR,Myanmar,country,Asia,true
+MNE,Montenegro,country,Europe,true
+MNG,Mongolia,country,Asia,true
+MOZ,Mozambique,country,Africa,true
+MRT,Mauritania,country,Africa,true
+MSR,Montserrat,country,North America,true
+MTQ,Martinique,country,North America,true
+MUS,Mauritius,country,Africa,true
+MWI,Malawi,country,Africa,true
+MYS,Malaysia,country,Asia,true
+NAM,Namibia,country,Africa,true
+NCL,New Caledonia,country,Oceania,true
+NER,Niger,country,Africa,true
+NGA,Nigeria,country,Africa,true
+NIC,Nicaragua,country,North America,true
+NIU,Niue,country,Oceania,true
+NLD,Netherlands,country,Europe,true
+NOR,Norway,country,Europe,true
+NPL,Nepal,country,Asia,true
+NRU,Nauru,country,Oceania,true
+NZL,New Zealand,country,Oceania,true
+OMN,Oman,country,Asia,true
+PAK,Pakistan,country,Asia,true
+PAN,Panama,country,North America,true
+PER,Peru,country,South America,true
+PHL,Philippines,country,Asia,true
+PLW,Palau,country,Oceania,true
+PNG,Papua New Guinea,country,Oceania,true
+POL,Poland,country,Europe,true
+PRI,Puerto Rico,country,North America,true
+PRK,North Korea,country,Asia,true
+PRT,Portugal,country,Europe,true
+PRY,Paraguay,country,South America,true
+PSE,Palestine,country,Asia,true
+PYF,French Polynesia,country,Oceania,true
+QAT,Qatar,country,Asia,true
+REG_AFRICA,Africa,region,,false
+REG_ASEAN,ASEAN,region,,false
+REG_ASIA,Asia,region,,false
+REG_AU,AU,region,,false
+REG_EU,EU,region,,false
+REG_EUROPE,Europe,region,,false
+REG_G20,G20,region,,false
+REG_G7,G7,region,,false
+REG_LATIN_AMERICA_AND_CARIBBEAN,Latin America and Caribbean,region,,false
+REG_MENA,MENA,region,,false
+REG_MIDDLE_EAST,Middle East,region,,false
+REG_NORTH_AMERICA,North America,region,,false
+REG_OCEANIA,Oceania,region,,false
+REG_OECD,OECD,region,,false
+REG_WORLD,World,region,,false
+REU,Reunion,country,Africa,true
+ROU,Romania,country,Europe,true
+RUS,Russia,country,Europe,true
+RWA,Rwanda,country,Africa,true
+SAU,Saudi Arabia,country,Asia,true
+SDN,Sudan,country,Africa,true
+SEN,Senegal,country,Africa,true
+SGP,Singapore,country,Asia,true
+SHN,Saint Helena,country,Africa,true
+SLB,Solomon Islands,country,Oceania,true
+SLE,Sierra Leone,country,Africa,true
+SLV,El Salvador,country,North America,true
+SMR,San Marino,country,Europe,true
+SOM,Somalia,country,Africa,true
+SPM,Saint Pierre and Miquelon,country,North America,true
+SRB,Serbia,country,Europe,true
+SSD,South Sudan,country,Africa,true
+STP,Sao Tome and Principe,country,Africa,true
+SUR,Suriname,country,South America,true
+SVK,Slovakia,country,Europe,true
+SVN,Slovenia,country,Europe,true
+SWE,Sweden,country,Europe,true
+SWZ,Eswatini,country,Africa,true
+SXM,Sint Maarten (Dutch part),country,North America,true
+SYC,Seychelles,country,Africa,true
+SYR,Syria,country,Asia,true
+TCA,Turks and Caicos Islands,country,North America,true
+TCD,Chad,country,Africa,true
+TGO,Togo,country,Africa,true
+THA,Thailand,country,Asia,true
+TJK,Tajikistan,country,Asia,true
+TKM,Turkmenistan,country,Asia,true
+TLS,East Timor,country,Asia,true
+TON,Tonga,country,Oceania,true
+TTO,Trinidad and Tobago,country,North America,true
+TUN,Tunisia,country,Africa,true
+TUR,Turkey,country,Asia,true
+TUV,Tuvalu,country,Oceania,true
+TWN,Taiwan,country,Asia,true
+TZA,Tanzania,country,Africa,true
+UGA,Uganda,country,Africa,true
+UKR,Ukraine,country,Europe,true
+URY,Uruguay,country,South America,true
+USA,United States,country,North America,true
+UZB,Uzbekistan,country,Asia,true
+VAT,Vatican,country,Europe,true
+VCT,Saint Vincent and the Grenadines,country,North America,true
+VEN,Venezuela,country,South America,true
+VGB,British Virgin Islands,country,North America,true
+VIR,Virgin Islands (U.S.),country,North America,true
+VNM,Vietnam,country,Asia,true
+VUT,Vanuatu,country,Oceania,true
+WLF,Wallis and Futuna,country,Oceania,true
+WSM,Samoa,country,Oceania,true
+XKX,Kosovo,country,Europe,true
+YEM,Yemen,country,Asia,true
+ZAF,South Africa,country,Africa,true
+ZMB,Zambia,country,Africa,true
+ZWE,Zimbabwe,country,Africa,true

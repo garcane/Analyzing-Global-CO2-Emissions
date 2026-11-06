@@ -1,0 +1,55 @@
+{
+  "name": "GEI-Emerald",
+  "dataColors": [
+    "#3ECF8E",
+    "#24B47E",
+    "#171717",
+    "#707070",
+    "#FFDB13",
+    "#644FC1",
+    "#C7007E",
+    "#054CFF",
+    "#E2005A",
+    "#4ADE80"
+  ],
+  "foreground": "#171717",
+  "foregroundNeutralSecondary": "#707070",
+  "foregroundNeutralTertiary": "#9A9A9A",
+  "foregroundNeutralLight": "#B2B2B2",
+  "background": "#FFFFFF",
+  "backgroundLight": "#FAFAFA",
+  "backgroundNeutral": "#DFDFDF",
+  "backgroundDark": "#C7C7C7",
+  "tableAccent": "#24B47E",
+  "good": "#24B47E",
+  "neutral": "#FFDB13",
+  "bad": "#E2005A",
+  "minimum": "#E8F7EF",
+  "center": "#3ECF8E",
+  "maximum": "#24B47E",
+  "null": "#B2B2B2",
+  "hyperlink": "#24B47E",
+  "visitedHyperlink": "#644FC1",
+  "textClasses": {
+    "callout": {
+      "fontSize": 21,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#171717"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#171717"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#171717"
+    },
+    "label": {
+      "fontSize": 10.5,
+      "fontFace": "Segoe UI",
+      "color": "#707070"
+    }
+  }
+}
