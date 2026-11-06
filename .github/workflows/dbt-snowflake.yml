@@ -44,6 +44,26 @@ jobs:
           # Later steps (dbt reads this) and the cleanup step use the same path.
           echo "DBT_SNOWFLAKE_PRIVATE_KEY_PATH=$RUNNER_TEMP/ci_key.p8" >> "$GITHUB_ENV"
 
+      # Explains a "JWT token is invalid" login failure without exposing any secret: it prints whether each
+      # secret equals the expected non-secret value, the shape of the key file, and the PUBLIC key
+      # fingerprint to compare with `DESC USER GEI_CI_SVC` (RSA_PUBLIC_KEY_FP) in Snowflake.
+      - name: Pre-flight check of the credentials (prints no secret)
+        env:
+          SF_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SF_USER: ${{ secrets.CI_SNOWFLAKE_USER }}
+          EXPECTED_ACCOUNT: GWEPWIG-CA86069
+          EXPECTED_USER: GEI_CI_SVC
+        run: |
+          f="$DBT_SNOWFLAKE_PRIVATE_KEY_PATH"
+          if [ "$SF_ACCOUNT" = "$EXPECTED_ACCOUNT" ]; then echo "SNOWFLAKE_ACCOUNT: equals the expected value"; else echo "SNOWFLAKE_ACCOUNT: DIFFERS from the expected value (length ${#SF_ACCOUNT}, expected ${#EXPECTED_ACCOUNT})"; fi
+          if [ "$SF_USER" = "$EXPECTED_USER" ]; then echo "CI_SNOWFLAKE_USER: equals the expected value"; else echo "CI_SNOWFLAKE_USER: DIFFERS from the expected value (length ${#SF_USER}, expected ${#EXPECTED_USER})"; fi
+          echo "key file: $(wc -l < "$f") lines, first line '$(head -1 "$f" | tr -d '\r')', carriage returns: $(tr -cd '\r' < "$f" | wc -c)"
+          if fp=$(openssl pkey -in "$f" -pubout -outform DER 2>/dev/null | openssl dgst -sha256 -binary | openssl base64) && [ -n "$fp" ]; then
+            echo "public key fingerprint: SHA256:$fp"
+          else
+            echo "key file is NOT a readable private key (empty, truncated or wrong format)"
+          fi
+
       - name: dbt seed, build and freshness
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
