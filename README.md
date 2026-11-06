@@ -145,6 +145,36 @@ before publishing a new data vintage. The detailed narrative and caveats are in
 - In the 2010–2022 transition window, **148 of 208** countries were eligible for comparison and **48** showed
   GDP growth alongside falling national CO₂. This is an association, not evidence that one caused the other.
 
+## Dashboard
+
+The Power BI report ([powerbi/](powerbi/README.md)) has six pages. Five are shown below, exported from Power BI
+Desktop on 2026-11-06; the sixth is a text page of data notes. In this export the two maps render empty and some table
+totals are not meaningful. Both are listed as known issues in
+[powerbi/README.md](powerbi/README.md#known-issues-seen-in-the-pdf-export).
+
+**1. World overview.** Ember's own World figures: renewable share of generation, total generation and generation by
+source category.
+
+![World overview page: world renewable share, world electricity generation and generation by source category, 2000-2025](imgs/image1.jpg)
+
+**2. Country mix.** Renewable, fossil, coal and gas share for any country or group of countries.
+
+![Country mix page: renewable versus fossil share, coal and gas share, a renewable-share map and generation by source](imgs/image2.jpg)
+
+**3. Renewable growth.** Solar, wind and hydro generation, capacity factor, and year-on-year change by country.
+
+![Renewable growth page: generation by renewable series, capacity factor and a table of renewable generation by country](imgs/image3.jpg)
+
+**4. Transition leaders, 2010 to 2022.** Share gain against change in total generation, ranked both by percentage
+points and by absolute TWh.
+
+![Transition leaders page: share gain versus change in total generation, a ranking table and a map](imgs/image4.jpg)
+
+**5. Emissions and economy.** GDP growth against national CO2 change (an association, not causation) and
+power-sector carbon intensity.
+
+![Emissions and economy page: GDP growth versus national CO2 change, power-sector carbon intensity and a country table](imgs/image5.jpg)
+
 ## Data sources and interpretation
 
 | Source | Used for | Licence / caveat |
