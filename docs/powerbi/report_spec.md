@@ -59,7 +59,8 @@ Compare these with the visuals (all computed from the exported marts on 2026-11-
 
 ## The project
 The model and the six pages above exist as a Power BI Project in `powerbi/GEI.pbip` (see `powerbi/README.md`
-for how to open it and for what has and has not been verified). It was generated as text files and **has not yet
-been opened in Power BI Desktop**: open it, refresh, and check the numbers in the table above. The measures in
+for how to open it and for what has and has not been verified). It was generated as text files and now opens in
+Power BI Desktop (confirmed 2026-11-06). The numbers have **not yet been checked**: refresh and compare them
+with the table above. The measures in
 `measures.dax` are the same ones that are in the project's model.
 Screenshots of the finished pages belong in `docs/img/` and the README.
