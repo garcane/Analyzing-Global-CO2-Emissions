@@ -37,7 +37,11 @@ def test_snowflake_workflow_is_manual_only_and_gated():
     assert doc["jobs"]["build"]["environment"] == "snowflake-trial"
     # The drop step must run even if the build fails, and must use the guarded macro.
     drops = [s for s in doc["jobs"]["build"]["steps"] if "drop_ci_schemas" in str(s.get("run", ""))]
-    assert drops and drops[0].get("if") == "always()"
+    assert drops and "always()" in str(drops[0].get("if"))
+    # ...and no secret may be handed to the cleanup or build step directly: credentials come from the prepare step.
+    for step in doc["jobs"]["build"]["steps"]:
+        if step.get("id") == "dbt" or "drop_ci_schemas" in str(step.get("run", "")):
+            assert "secrets." not in str(step.get("env", {}))
 
 
 def test_ci_workflow_uses_no_secrets():
